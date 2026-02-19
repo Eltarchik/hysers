@@ -1,26 +1,76 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --space: #131313;
+  --island: #181818;
+  --glade: #212121;
+
+  --element: #AFAFAF;
+  --element-imp: #FFFFFF;
+  --element-sub: #585858;
+  --element-dis: #424242;
+
+  --accent-island: #1A361A;
+  --accent-element: #84B844;
+
+  --red-island: #44151D;
+  --red-element: #FF2853;
+
+  --gold-island: #442715;
+  --gold-element: #FFC228;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
+  --color-space: var(--space);
+  --color-island: var(--island);
+  --color-glade: var(--glade);
+
+  --color-element: var(--element);
+  --color-element-imp: var(--element-imp);
+  --color-element-sub: var(--element-sub);
+  --color-element-dis: var(--element-dis);
+
+  --color-accent-island: var(--accent-island);
+  --color-accent-element: var(--accent-element);
+
+  --color-red-island: var(--red-island);
+  --color-red-element: var(--red-element);
+
+  --color-gold-island: var(--gold-island);
+  --color-gold-element: var(--gold-element);
+
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+
   }
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  color: var(--element);
+  font-family: "Google Sans", Helvetica, sans-serif;
+}
+
+input, button, a {
+  outline: none;
+  border: none;
+}
+
+input::placeholder {
+  color: var(--element-dis);
+}
+
+input[type="search"] {
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+input[type="search"]::-webkit-search-decoration,
+input[type="search"]::-webkit-search-cancel-button,
+input[type="search"]::-webkit-search-results-button,
+input[type="search"]::-webkit-search-results-decoration {
+  display: none;
 }
