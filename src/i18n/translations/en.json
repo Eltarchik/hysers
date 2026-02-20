@@ -1,0 +1,31 @@
+{
+  "Shared": {
+
+  },
+  "Pages": {
+
+  },
+  "Entities": {
+    "Filters": {
+      "tags": {
+        "title": "Tags",
+        "pvp": "PVP",
+        "pve": "PVE",
+        "vanilla": "Vanilla",
+        "survival": "Survival",
+        "rp": "RP",
+        "rpg": "RPG",
+        "mini_games": "Mini-games"
+      },
+      "regions": {
+        "title": "Regions",
+        "cis": "CIS",
+        "europe": "europe",
+        "asian": "asian",
+        "africa": "africa",
+        "north_america": "north america",
+        "south_america": "south america"
+      }
+    }
+  }
+}

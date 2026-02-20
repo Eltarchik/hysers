@@ -5,6 +5,7 @@ import { Heading } from "@/shared/ui/Heading"
 import { Text } from "@/shared/ui/Text"
 import { SmallChip } from "@/shared/ui/SmallChip"
 import { Button } from "@/shared/ui/Button"
+import { Input } from "@/shared/ui/Input"
 
 export const Header = () => {
     return <header className="grid grid-cols-[1fr_1fr_1fr] xl:grid-cols-[1fr_2fr_1fr] gap-10 h-12 max-w-440 w-full">
@@ -18,13 +19,9 @@ export const Header = () => {
             <SmallChip colors={"accent"}>52 servers</SmallChip>
         </div>
 
-        <label className="flex items-center gap-2 px-5 h-12 w-full rounded-2xl bg-island">
-            <input className="flex w-full"
-                   type="search"
-                   placeholder="Find server"
-            />
+        <Input type="search" placeholder="Find server">
             <Search color="var(--element-dis)" />
-        </label>
+        </Input>
 
         <div className="flex gap-5">
             <Button className="px-0 size-12">
