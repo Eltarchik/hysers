@@ -1,10 +1,10 @@
 export enum RegionFilters {
     CIS = "cis",
     EUROPE = "europe",
-    ASIAN = "asian",
     AFRICA = "africa",
-    NORTH_AMERICA = "north_america",
+    ASIAN = "asian",
     SOUTH_AMERICA = "south_america",
+    NORTH_AMERICA = "north_america",
 }
 
 export const regionFilters: Filter = {
@@ -12,9 +12,9 @@ export const regionFilters: Filter = {
     items: [
         { name: RegionFilters.CIS },
         { name: RegionFilters.EUROPE },
-        { name: RegionFilters.ASIAN },
         { name: RegionFilters.AFRICA },
-        { name: RegionFilters.NORTH_AMERICA },
+        { name: RegionFilters.ASIAN },
         { name: RegionFilters.SOUTH_AMERICA },
+        { name: RegionFilters.NORTH_AMERICA },
     ]
 }

@@ -5,6 +5,7 @@ import { useState } from "react"
 import { SmallChip } from "@/shared/ui/ToggleChip"
 import { filters } from "@/entities/filters/config/filters"
 import { useTranslations } from "next-intl"
+import { titleCase } from "@/shared/lib/textFormatting"
 
 export default function Home() {
     const [ o, setO ] = useState(true)
@@ -20,7 +21,7 @@ export default function Home() {
                 >
                     <div className="flex gap-3 flex-wrap">
                         { filter.items.map(item =>
-                            <SmallChip key={item.name}>{ t(filter.name, item.name) }</SmallChip>
+                            <SmallChip key={item.name}>{ titleCase(t(filter.name, item.name)) }</SmallChip>
                         )}
                     </div>
                 </FilterCard>

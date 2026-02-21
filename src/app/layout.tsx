@@ -5,6 +5,7 @@ import { cn } from "@/shared/lib/cn"
 import { Header } from "@/wigets/Header"
 import { ReactNode } from "react"
 import { NextIntlClientProvider } from "next-intl"
+import { getLocale, getMessages } from "next-intl/server"
 
 const geistSans = Geist({
     variable: "--font-geist-sans",
@@ -25,9 +26,10 @@ interface Props {
     children: ReactNode
 }
 
-export default function RootLayout(
+export default async function RootLayout(
     { children, }: Props
 ) {
+
     return <html>
         <body
             className={cn(

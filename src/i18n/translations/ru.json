@@ -1,0 +1,31 @@
+{
+  "Shared": {
+
+  },
+  "Pages": {
+
+  },
+  "Entities": {
+    "Filters": {
+      "tags": {
+        "title": "Теги",
+        "pvp": "PVP",
+        "pve": "PVE",
+        "vanilla": "Vanilla",
+        "survival": "Survival",
+        "rp": "RP",
+        "rpg": "RPG",
+        "mini_games": "Mini-games"
+      },
+      "regions": {
+        "title": "Регионы",
+        "cis": "СНГ",
+        "europe": "европа",
+        "asian": "азия",
+        "africa": "африка",
+        "north_america": "северная америка",
+        "south_america": "южная америка"
+      }
+    }
+  }
+}
