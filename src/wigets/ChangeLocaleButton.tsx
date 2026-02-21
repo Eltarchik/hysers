@@ -13,10 +13,10 @@ export const ChangeLocaleButton = () => {
 
     const [ opened, setOpened, ref ] = useOverlay<HTMLDivElement>()
 
-    const onItemClick = async (land: Locale) => {
-        await setLang(land)
+    const onItemClick = async (lang: Locale) => {
+        if (locale === lang) return
 
-
+        await setLang(lang)
         location.reload()
     }
 
