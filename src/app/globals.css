@@ -1,5 +1,11 @@
 @import "../../node_modules/tailwindcss";
 
+:root,
+html,
+body {
+  transition: background-color 80ms ease-in, color 80ms ease-in, border-color 80ms ease-in;
+}
+
 :root {
   --space: #131313;
   --island: #181818;
@@ -45,8 +51,27 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-
   }
+}
+
+html.light {
+  --space: #F4F4F4;
+  --island: #FFFFFF;
+  --glade: #EEEEEE;
+
+  --element: #575757;
+  --element-imp: #323232;
+  --element-sub: #A9A9A9;
+  --element-dis: #CDCDCD;
+
+  --accent-island: #D2F1BA;
+  --accent-element: #45851A;
+
+  --red-island: #FF2853;
+  --red-element: #FFFFFF;
+
+  --gold-island: #FFB223;
+  --gold-element: #FFFFFF;
 }
 
 body {

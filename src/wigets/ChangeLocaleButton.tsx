@@ -32,12 +32,12 @@ export const ChangeLocaleButton = () => {
                     <button key={ lang }
                             className={ cn(
                                 "flex justify-center items-center px-3 h-10 rounded-lg cursor-pointer",
-                                lang === locale ? "bg-glade" : "",
+                                lang === locale && "bg-glade"
                             ) }
                             onClick={ () => onItemClick(lang) }
                     >
-                        <Text>{ lang.toUpperCase() }</Text>
-                    </button>,
+                        <Text className={lang === locale ? "text-element-imp" : ""}>{ lang.toUpperCase() }</Text>
+                    </button>
                 ) }
             </div>
         }
