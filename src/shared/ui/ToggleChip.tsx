@@ -10,7 +10,7 @@ interface Props {
     onToggle?: MouseEventHandler<HTMLButtonElement>
 }
 
-export const SmallChip = ({
+export const ToggleChip = ({
     selected = false,
     className,
     children,
@@ -20,7 +20,7 @@ export const SmallChip = ({
     return <button className={cn(
                         "flex items-center px-5 h-10 rounded-full cursor-pointer",
                         selected ? "bg-accent-island" : "bg-glade",
-                        "transition-colors duration-200 ease-in",
+                        "transition-colors duration-80 ease-in",
                         className
                    )}
                    onClick={onToggle}
@@ -28,7 +28,7 @@ export const SmallChip = ({
         <Text className={cn(
                         "text-nowrap",
                         selected ? "text-accent-element" : "text-element",
-                        "transition-colors duration-200 ease-in",
+                        "transition-colors duration-80 ease-in",
               )}
         >
             { children }

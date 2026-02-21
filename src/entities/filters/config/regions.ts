@@ -1,3 +1,5 @@
+import { Filter, Filters } from "@/entities/filters/types"
+
 export enum RegionFilters {
     CIS = "cis",
     EUROPE = "europe",
@@ -8,7 +10,7 @@ export enum RegionFilters {
 }
 
 export const regionFilters: Filter = {
-    name: "regions",
+    name: Filters.REGIONS,
     items: [
         { name: RegionFilters.CIS },
         { name: RegionFilters.EUROPE },

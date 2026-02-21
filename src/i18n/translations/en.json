@@ -25,6 +25,13 @@
         "africa": "africa",
         "north_america": "north america",
         "south_america": "south america"
+      },
+      "sort": {
+        "title": "Sort",
+        "online": "Online",
+        "popular": "Popular",
+        "hot": "Hot",
+        "new": "New"
       }
     }
   }

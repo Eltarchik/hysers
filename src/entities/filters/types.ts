@@ -2,7 +2,12 @@ interface FilterItem {
     name: string
 }
 
-interface Filter {
-    name: string
+export interface Filter {
+    name: Filters
     items: FilterItem[]
+}
+
+export enum Filters {
+    TAGS = "tags",
+    REGIONS = "regions"
 }

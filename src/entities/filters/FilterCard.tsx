@@ -39,19 +39,20 @@ export const FilterCard = ({
                     height: mounted ? cardHeight : "fit-content"
                 }}
     >
-        <div className="flex items-center gap-2">
+        <button className="flex items-center gap-2 h-6 cursor-pointer"
+                disabled={opened === undefined}
+                onClick={onOpeningSwitch}
+        >
             { opened !== undefined &&
-                <button className="size-6 cursor-pointer" onClick={onOpeningSwitch}>
-                    <ChevronDown color="var(--element-sub)"
-                                 className={cn(
-                                     "transition-transform duration-80 ease-in",
-                                     !opened ? "-rotate-90" : ""
-                                 )}
-                    />
-                </button>
+                <ChevronDown color="var(--element-sub)"
+                             className={cn(
+                                 "transition-transform duration-80 ease-in",
+                                 !opened ? "-rotate-90" : ""
+                             )}
+                />
             }
             <Heading className="text-element-sub leading-6">{ title }</Heading>
-        </div>
+        </button>
         <div className={cn(
                 "transition-opacity duration-80 ease-in",
                 !opened && "opacity-0"

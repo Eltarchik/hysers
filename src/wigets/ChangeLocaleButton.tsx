@@ -1,4 +1,4 @@
-'use client';
+'use client'
 
 import { Text } from "@/shared/ui/Text"
 import { useLocale } from "next-intl"

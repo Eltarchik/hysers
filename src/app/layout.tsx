@@ -4,8 +4,8 @@ import "./globals.css"
 import { cn } from "@/shared/lib/cn"
 import { Header } from "@/wigets/Header"
 import { ReactNode } from "react"
+import { StoreProvider } from "@/app/storeProvider"
 import { NextIntlClientProvider } from "next-intl"
-import { getLocale, getMessages } from "next-intl/server"
 
 const geistSans = Geist({
     variable: "--font-geist-sans",
@@ -38,10 +38,12 @@ export default async function RootLayout(
                 "antialiased flex flex-col gap-10 items-center bg-space p-5"
             )}
         >
-        <NextIntlClientProvider>
-            <Header />
-            { children }
-        </NextIntlClientProvider>
+            <NextIntlClientProvider>
+                <StoreProvider>
+                    <Header />
+                    { children }
+                </StoreProvider>
+            </NextIntlClientProvider>
         </body>
     </html>
 }

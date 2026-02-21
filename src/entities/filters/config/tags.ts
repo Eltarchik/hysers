@@ -1,3 +1,5 @@
+import { Filter, Filters } from "@/entities/filters/types"
+
 export enum TagFilters {
     PVP = "pvp",
     PVE = "pve",
@@ -9,7 +11,7 @@ export enum TagFilters {
 }
 
 export const tagFilters: Filter = {
-    name: "tags",
+    name: Filters.TAGS,
     items: [
         { name: TagFilters.PVP },
         { name: TagFilters.PVE },
