@@ -1,7 +1,6 @@
 'use client'
 
 import { ArrowDown } from "lucide-react"
-import { Text } from "@/shared/ui/Text"
 import { FilterCard } from "@/entities/filters/FilterCard"
 import { useTranslations } from "next-intl"
 import { useSortMutation } from "@/entities/filters/slices/sort.slice"
