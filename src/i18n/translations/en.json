@@ -11,11 +11,11 @@
         "title": "Tags",
         "pvp": "PVP",
         "pve": "PVE",
-        "vanilla": "Vanilla",
-        "survival": "Survival",
+        "vanilla": "vanilla",
+        "survival": "survival",
         "rp": "RP",
         "rpg": "RPG",
-        "mini_games": "Mini-games"
+        "mini_games": "mini-games"
       },
       "regions": {
         "title": "Regions",

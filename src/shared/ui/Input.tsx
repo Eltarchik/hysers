@@ -19,10 +19,10 @@ export const Input = ({
             className
         )}>
             <input
-                className={cn("flex w-full bg-transparent outline-none", inputClassName)}
+                className={cn("flex w-full text-xl font-medium", inputClassName)}
                 {...rest}
             />
-            {children}
+            { children }
         </label>
     )
 }

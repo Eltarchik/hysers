@@ -1,10 +1,12 @@
 'use client'
 
 import { FiltersBlock } from "@/wigets/FiltersBlock"
+import { ServerCards } from "@/wigets/ServerCards"
 
 export default function Home() {
 
-    return <div className="grid grid-cols-[1fr_1fr_1fr] xl:grid-cols-[1fr_2fr_1fr] gap-10 max-w-440 w-full">
-        <FiltersBlock />
+    return <div className="grid grid-cols-1 xl:grid-cols-[4fr_9fr_4fr] gap-10 max-w-440 w-full">
+        <FiltersBlock className="hidden xl:flex" />
+        <ServerCards />
     </div>
 }

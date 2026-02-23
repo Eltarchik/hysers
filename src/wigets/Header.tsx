@@ -10,7 +10,7 @@ import { ChangeLocaleButton } from "@/wigets/ChangeLocaleButton"
 import { ChangeThemeButton } from "@/wigets/ChangeThemeButton"
 
 export const Header = () => {
-    return <header className="grid grid-cols-[1fr_1fr_1fr] xl:grid-cols-[1fr_2fr_1fr] gap-10 h-12 max-w-440 w-full">
+    return <header className="grid grid-cols-3 xl:grid-cols-[4fr_9fr_4fr] gap-10 h-12 max-w-440 w-full">
         <div className="flex items-center gap-5">
             <Button className="px-0 size-12">
                 <Menu />
@@ -18,7 +18,7 @@ export const Header = () => {
             <Link href={Routes.HOME}>
                 <Heading size="lg">HyGames</Heading>
             </Link>
-            <SmallChip colors={"accent"}>52 servers</SmallChip>
+            <SmallChip colors={"accent"} className="hidden 2xl:flex">52 servers</SmallChip>
         </div>
 
         <Input type="search" placeholder="Find server">

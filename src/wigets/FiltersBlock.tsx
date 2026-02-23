@@ -10,8 +10,13 @@ import { filters } from "@/entities/filters/config/filters"
 import { useFiltersInit, useFiltersSlice } from "@/entities/filters/slices/filters.slice"
 import { SortCard } from "@/entities/filters/SortCard"
 import { useSortInit } from "@/entities/filters/slices/sort.slice"
+import { cn } from "@/shared/lib/cn"
 
-export const FiltersBlock = () => {
+interface Props {
+    className?: string
+}
+
+export const FiltersBlock = ({ className }: Props) => {
     const t = useTranslations("Entities.Filters")
 
     const filtersLoaded = useFiltersInit()
@@ -23,7 +28,7 @@ export const FiltersBlock = () => {
 
     // todo add skeleton when cached values loading
 
-    return <div className="flex flex-col gap-5 w-full">
+    return <div className={cn("flex flex-col gap-5 w-full", className)}>
         <SortCard />
         { filters.map(filter =>
             <FilterCard key={filter.name}
@@ -38,7 +43,7 @@ export const FiltersBlock = () => {
                                     onToggle={() => toggleSelecting(filter.name, item.name)}
                         >
                             { titleCase(t(`${filter.name}.${item.name}`)) }
-                        </ToggleChip>,
+                        </ToggleChip>
                     ) }
                 </div>
             </FilterCard>

@@ -25,11 +25,11 @@ export const ToggleChip = ({
                    )}
                    onClick={onToggle}
     >
-        <Text className={cn(
-                        "text-nowrap",
-                        selected ? "text-accent-element" : "text-element",
-                        "transition-colors duration-80 ease-in",
-              )}
+        <Text className={ cn(
+                    "text-nowrap",
+                    selected ? "text-accent-element" : "text-element",
+                    "transition-colors duration-80 ease-in",
+                )}
         >
             { children }
         </Text>

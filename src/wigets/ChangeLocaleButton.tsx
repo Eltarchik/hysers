@@ -27,7 +27,7 @@ export const ChangeLocaleButton = () => {
             <Text>{ locale.toUpperCase() }</Text>
         </Button>
         { opened &&
-            <div className="absolute top-full translate-y-2 flex flex-col p-2 w-full rounded-2xl bg-island">
+            <div className="absolute top-full translate-y-2 flex flex-col p-2 w-full rounded-2xl bg-island shadow-2xl shadow-space">
                 { Object.values(Locale).map(lang =>
                     <button key={ lang }
                             className={ cn(
@@ -38,7 +38,7 @@ export const ChangeLocaleButton = () => {
                     >
                         <Text className={lang === locale ? "text-element-imp" : ""}>{ lang.toUpperCase() }</Text>
                     </button>
-                ) }
+                )}
             </div>
         }
     </div>
