@@ -2,7 +2,7 @@ import { Heading } from "@/shared/ui/Heading"
 import { Text } from "@/shared/ui/Text"
 import { SmallChip } from "@/shared/ui/SmallChip"
 import { ReactNode } from "react"
-import { Server, ServerStatus } from "@/entities/server/types"
+import { Server } from "@/entities/server/types"
 import { useTranslations } from "next-intl"
 
 interface Props {
