@@ -4,6 +4,7 @@ import { RegionFilters } from "@/entities/filters/config/regions"
 
 const mockServers: Server[] = [
     {
+        id: 1,
         nameId: "hygames",
         name: "Hygames",
         description: "Welcome to our Hytale RPG Survival Server – a balanced experience focused on long-term progression, cooperation, and quality-of-life features",
@@ -16,6 +17,7 @@ const mockServers: Server[] = [
         region: RegionFilters.CIS,
     },
     {
+        id: 2,
         nameId: "runeteria",
         name: "Runeteria",
         description: "Welcome to our Hytale RPG Survival Server – a balanced experience focused on long-term progression, cooperation, and quality-of-life features",
@@ -28,6 +30,7 @@ const mockServers: Server[] = [
         region: RegionFilters.EUROPE,
     },
     {
+        id: 3,
         nameId: "hytown",
         name: "Hytown",
         description: "Welcome to our Hytale RPG Survival Server – a balanced experience focused on long-term progression, cooperation, and quality-of-life features",
@@ -40,6 +43,7 @@ const mockServers: Server[] = [
         region: RegionFilters.AFRICA,
     },
     {
+        id: 4,
         nameId: "dogecraft",
         name: "Dogecraft",
         description: "Welcome to our Hytale RPG Survival Server – a balanced experience focused on long-term progression, cooperation, and quality-of-life features",
@@ -52,6 +56,7 @@ const mockServers: Server[] = [
         region: RegionFilters.CIS,
     },
     {
+        id: 5,
         nameId: "lotus-hytale",
         name: "Lotus Hytale",
         description: "Welcome to our Hytale RPG Survival Server – a balanced experience focused on long-term progression, cooperation, and quality-of-life features",
@@ -64,6 +69,7 @@ const mockServers: Server[] = [
         region: RegionFilters.ASIAN,
     },
     {
+        id: 6,
         nameId: "minishoot",
         name: "Minishoot",
         description: "Welcome to our Hytale RPG Survival Server – a balanced experience focused on long-term progression, cooperation, and quality-of-life features",
@@ -76,6 +82,7 @@ const mockServers: Server[] = [
         region: RegionFilters.ASIAN,
     },
     {
+        id: 7,
         nameId: "woa",
         name: "WoA",
         description: "Welcome to our Hytale RPG Survival Server – a balanced experience focused on long-term progression, cooperation, and quality-of-life features",
@@ -93,7 +100,11 @@ export class ServerAPI {
     private static BASE_URL = "/server"
 
     static servers = () => {
+
         return mockServers // todo change to api request
     }
 
+    static like = (id: number) => {
+        // todo add api request
+    }
 }

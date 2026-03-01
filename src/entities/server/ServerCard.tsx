@@ -4,6 +4,8 @@ import { SmallChip } from "@/shared/ui/SmallChip"
 import { ReactNode } from "react"
 import { Server } from "@/entities/server/types"
 import { useTranslations } from "next-intl"
+import { Routes } from "@/shared/config/routes"
+import { useRouter } from "next/navigation"
 
 interface Props {
     server: Server
@@ -14,12 +16,19 @@ export const ServerCard = (
     { server, children }: Props
 ) => {
     const t = useTranslations(`Entities.Filters.tags`)
+    const href = Routes.SERVER(server.nameId)
+    const router = useRouter()
 
-    return <div className="flex flex-col overflow-hidden rounded-2xl bg-island">
+    return <div className="flex flex-col overflow-hidden rounded-2xl bg-island cursor-pointer"
+                onClick={() => router.push(href)}
+    >
         <div className="w-full h-40 bg-glade" />
         <div className="relative flex flex-col gap-2 p-5 w-full">
-            <Heading className="truncate">{ server.name }</Heading>
-            <Text small className="line-clamp-3 text-ellipsis text-element-sub mb-1">
+            { children }
+            <Heading className="truncate leading-8">
+                { server.name }
+            </Heading>
+            <Text small className="line-clamp-3 text-ellipsis text-element-sub h-15">
                 { server.description }
             </Text>
             <div className="flex gap-2">
@@ -32,7 +41,6 @@ export const ServerCard = (
                     <SmallChip colors="basic">{ t(server.tags[0]) }</SmallChip>
                 }
             </div>
-            { children }
         </div>
     </div>
 }

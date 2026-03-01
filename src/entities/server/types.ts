@@ -2,6 +2,7 @@ import { TagFilters } from "@/entities/filters/config/tags"
 import { RegionFilters } from "@/entities/filters/config/regions"
 
 export interface Server {
+    id: number
     nameId: string
     name: string
     description: string
