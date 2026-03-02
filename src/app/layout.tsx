@@ -4,7 +4,7 @@ import "./globals.css"
 import { cn } from "@/shared/lib/cn"
 import { Header } from "@/wigets/Header"
 import { ReactNode } from "react"
-import { StoreProvider } from "@/app/storeProvider"
+import { ClientProvider } from "@/app/ClientProvider"
 import { NextIntlClientProvider } from "next-intl"
 
 const geistSans = Geist({
@@ -29,20 +29,18 @@ interface Props {
 export default async function RootLayout(
     { children, }: Props
 ) {
-
     return <html>
         <body
             className={cn(
                 geistSans.variable,
                 geistMono.variable,
-                "antialiased flex flex-col gap-10 items-center bg-space p-5"
+                "antialiased flex flex-col gap-10 items-center bg-space p-5 h-screen"
             )}
         >
             <NextIntlClientProvider>
-                <StoreProvider>
-                    <Header />
+                <ClientProvider>
                     { children }
-                </StoreProvider>
+                </ClientProvider>
             </NextIntlClientProvider>
         </body>
     </html>
