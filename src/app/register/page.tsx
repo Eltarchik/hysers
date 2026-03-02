@@ -4,13 +4,10 @@ import { Button } from "@/shared/ui/Button"
 import { Text } from "@/shared/ui/Text"
 import Link from "next/link"
 import { Routes } from "@/shared/config/routes"
-import Image from "next/image"
 import { PasswordInput } from "@/entities/auth/PasswordInput"
 import { LoginWithDiscordButton } from "@/entities/auth/LoginWithDiscordButton"
-import { useForm } from "react-hook-form"
 
 export default function Register() {
-    const {} = useForm()
 
     return <div className="flex justify-center items-center h-full w-full">
         <div className="flex items-center flex-col gap-5 p-5 w-120 rounded-2xl bg-island">
