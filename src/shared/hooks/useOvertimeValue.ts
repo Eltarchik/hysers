@@ -9,8 +9,6 @@ export const useOvertimeValue = <T>(
     const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
 
     const handleUpdate = useEffectEvent((nextValue: T) => {
-        console.log(isKilled(overtimeValue))
-
         if (timeoutRef.current) {
             clearTimeout(timeoutRef.current)
             timeoutRef.current = null
@@ -33,9 +31,7 @@ export const useOvertimeValue = <T>(
 
     useEffect(() => {
         return () => {
-            if (timeoutRef.current) {
-                clearTimeout(timeoutRef.current)
-            }
+            if (timeoutRef.current) clearTimeout(timeoutRef.current)
         }
     }, [])
 

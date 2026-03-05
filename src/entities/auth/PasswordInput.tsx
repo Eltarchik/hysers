@@ -1,10 +1,10 @@
 'use client'
 
-import { Input } from "@/shared/ui/Input"
+import { Input, InputProps } from "@/shared/ui/Input"
 import { InputHTMLAttributes, useState } from "react"
 import { Eye, EyeClosed } from "lucide-react"
 
-interface Props extends Omit<InputHTMLAttributes<HTMLInputElement>, "tape"> {
+interface Props extends Omit<InputProps, "tape"> {
     className?: string
     inputClassName?: string
 }
@@ -23,8 +23,15 @@ export const PasswordInput = ({
                   {...rest}
     >
         <button className="flex justify-center content-center size-6 cursor-pointer"
-                onMouseDown={event => event.preventDefault() }
-                onClick={() => setShowPassword(prev => !prev)}
+                type="button"
+                onMouseDown={event => {
+                    event.stopPropagation()
+                    event.preventDefault()
+                }}
+                onClick={event => {
+                    event.preventDefault()
+                    setShowPassword(prev => !prev)
+                }}
         >
             { showPassword
                 ? <Eye color="var(--element-sub)" />

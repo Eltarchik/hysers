@@ -9,6 +9,7 @@ export const LoginWithDiscordButton = () => {
                alt="discord logo"
                width={24}
                height={24}
+               unoptimized
         />
         <Text className="text-[#5865F2]">Login with Discord</Text>
     </Button>

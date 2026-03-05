@@ -4,7 +4,7 @@ import { errorMessage } from "@/shared/service/errors"
 import { AuthAPI } from "@/shared/api/auth"
 
 const options: CreateAxiosDefaults = {
-    baseURL: process.env.API_BASE_URL,
+    baseURL: process.env.NEXT_PUBLIC_API_URL,
     withCredentials: true,
 }
 
