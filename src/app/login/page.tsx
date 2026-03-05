@@ -15,6 +15,7 @@ import { useOvertimeValue } from "@/shared/hooks/useOvertimeValue"
 import { useMutation } from "@tanstack/react-query"
 import { AuthAPI } from "@/shared/api/auth"
 import { useRouter } from "next/navigation"
+import { ChangeEvent, useCallback } from "react"
 
 const FormDataShema = z.object({
     email: z.email("Invalid email"),
@@ -32,7 +33,7 @@ export default function Login() {
     const router = useRouter()
 
     const { mutate } = useMutation({
-        mutationFn: async (formData: FormData) => {
+        mutationFn: async () => {
             return await AuthAPI.login(formData)
         },
         onError: async (error) => {
@@ -44,10 +45,16 @@ export default function Login() {
     })
 
     const { formData, submit, setField, fieldErrors, formError, setFormError } = useForm(FormDataShema, initialFormData, (data) => {
-        mutate(data)
-        console.log(data)
+        mutate()
     })
     const formOvertimeError = useOvertimeValue(formError)
+
+    const onFieldChange = useCallback(
+        (event: ChangeEvent<HTMLInputElement>, field: keyof FormData) => {
+            setFormError(undefined)
+            setField[field](event.target.value)
+        }, []
+    )
 
     return <div className="flex justify-center items-center h-full w-full">
         <div className="flex items-center flex-col gap-5 p-5 w-120 rounded-2xl bg-island">
@@ -58,18 +65,12 @@ export default function Login() {
                 <Input className="bg-glade"
                        placeholder="Email"
                        errorMsg={formData.email.length ? fieldErrors?.email : undefined}
-                       onChange={e => {
-                           setFormError(undefined)
-                           setField.email(e.target.value)
-                       }}
+                       onChange={e => onFieldChange(e, "email")}
                 />
                 <PasswordInput className="bg-glade"
                                placeholder="Password"
                                errorMsg={formData.password.length ? fieldErrors?.password : undefined}
-                               onChange={e => {
-                                   setFormError(undefined)
-                                   setField.password(e.target.value)
-                               }}
+                               onChange={e => onFieldChange(e, "password")}
                 />
                 <Button className="bg-accent-island w-full group"
                         type="submit"

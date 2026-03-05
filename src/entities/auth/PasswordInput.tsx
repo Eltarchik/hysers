@@ -19,7 +19,7 @@ export const PasswordInput = ({
     return <Input className={className}
                   inputClassName={inputClassName}
                   type={showPassword ? "text" : "password"}
-                  name="Password"
+                  name="password"
                   {...rest}
     >
         <button className="flex justify-center content-center size-6 cursor-pointer"

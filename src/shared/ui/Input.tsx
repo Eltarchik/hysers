@@ -1,6 +1,6 @@
 'use client'
 
-import { forwardRef, InputHTMLAttributes, ReactNode, RefObject, useRef } from "react"
+import { forwardRef, InputHTMLAttributes, memo, ReactNode, RefObject, useRef } from "react"
 import { cn } from "@/shared/lib/cn"
 import { Text } from "@/shared/ui/Text"
 import { useOvertimeValue } from "@/shared/hooks/useOvertimeValue"
@@ -13,7 +13,7 @@ export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
     children?: ReactNode
 }
 
-export const Input = forwardRef<HTMLInputElement, InputProps>(
+export const Input = memo(forwardRef<HTMLInputElement, InputProps>(
     ({
         className,
         inputClassName,
@@ -54,4 +54,5 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
             </Text>
         </div>
     }
-)
+))
+Input.displayName = "Input"
