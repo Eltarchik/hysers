@@ -103,7 +103,7 @@ export default function Register() {
                 />
                 <Button className="bg-accent-island w-full group"
                         type="submit"
-                        disabled={!!errors}
+                        disabled={!!errors || !!formError}
                 >
                     <Text className="text-accent-element group-disabled:text-element-dis">Register</Text>
                 </Button>
