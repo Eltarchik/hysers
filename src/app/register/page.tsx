@@ -5,25 +5,26 @@ import { Text } from "@/shared/ui/Text"
 import { Routes } from "@/shared/config/routes"
 import { PasswordInput } from "@/entities/auth/PasswordInput"
 import { z } from "zod"
-import { ChangeEvent, useCallback } from "react"
+import { ChangeEvent, useCallback, useEffect, useRef } from "react"
 import { useMutation } from "@tanstack/react-query"
 import { AuthAPI } from "@/shared/api/auth"
 import { cn } from "@/shared/lib/cn"
 import { useOvertimeValue } from "@/shared/hooks/useOvertimeValue"
 import { useRouter } from "next/navigation"
 import { useForm } from "@/shared/hooks/useForm"
-import { Heading } from "lucide-react"
 import { Button } from "@/shared/ui/Button"
 import { LoginWithDiscordButton } from "@/entities/auth/LoginWithDiscordButton"
 import Link from "next/link"
+import { Heading } from "@/shared/ui/Heading"
+import { isApiError } from "@/shared/api/errors"
 
-const FormDataShema = z.object({
+const formDataShema = z.object({
     name: z.string().min(3, "The name must contain at least 3 characters"),
     email: z.email("Invalid email"),
     password: z.string().min(6, "The password must contain at least 6 characters"),
 })
 
-type FormData = z.infer<typeof FormDataShema>
+type FormData = z.infer<typeof formDataShema>
 
 const initialFormData: FormData = {
     name: "",
@@ -34,11 +35,12 @@ const initialFormData: FormData = {
 export default function Register() {
     const router = useRouter()
 
-    const { mutate } = useMutation({
+    const { mutate, isPending } = useMutation({
         mutationFn: async () => {
             return await AuthAPI.register(formData)
         },
         onError: async (error) => {
+            if (!isApiError(error)) return
             setFormError(error.message)
         },
         onSuccess: async () => {
@@ -46,17 +48,40 @@ export default function Register() {
         }
     })
 
-    const { formData, submit, setField, fieldErrors, formError, setFormError } = useForm(FormDataShema, initialFormData, (data) => {
+    const {
+        formData,
+        submit,
+        setField,
+        isValid,
+        validateField,
+        hideFieldError,
+        fieldErrors,
+        formError,
+        setFormError,
+
+    } = useForm(formDataShema, initialFormData, () => {
         mutate()
     })
     const formOvertimeError = useOvertimeValue(formError)
+
+    const lastChangedField = useRef<keyof FormData | undefined>(undefined)
 
     const onFieldChange = useCallback(
         (event: ChangeEvent<HTMLInputElement>, field: keyof FormData) => {
             setFormError(undefined)
             setField[field](event.target.value)
+            hideFieldError[field]()
+            lastChangedField.current = field
         }, []
     )
+
+    useEffect(() => {
+        if (!lastChangedField.current) return
+        const timeout = setTimeout(validateField[lastChangedField.current], 600)
+        lastChangedField.current = undefined
+
+        return () => clearTimeout(timeout)
+    }, [formData])
 
     return <div className="flex justify-center items-center h-full w-full">
         <div className="flex items-center flex-col gap-5 p-5 w-120 rounded-2xl bg-island">
@@ -66,24 +91,29 @@ export default function Register() {
             >
                 <Input className="bg-glade"
                        placeholder="Name"
-                       errorMsg={fieldErrors?.name.length ? fieldErrors?.name : undefined}
+                       errorMsg={formData.name.length ? fieldErrors?.name : undefined}
                        onChange={e => onFieldChange(e, "name")}
+                       onBlur={validateField.name}
                 />
                 <Input className="bg-glade"
                        placeholder="Email"
-                       errorMsg={fieldErrors?.email.length ? fieldErrors?.email : undefined}
+                       errorMsg={formData.email.length ? fieldErrors?.email : undefined}
                        onChange={e => onFieldChange(e, "email")}
+                       onBlur={validateField.email}
                 />
                 <PasswordInput className="bg-glade"
                                placeholder="Password"
-                               errorMsg={fieldErrors?.password.length ? fieldErrors?.password : undefined}
+                               errorMsg={formData.password.length ? fieldErrors?.password : undefined}
                                onChange={e => onFieldChange(e, "password")}
+                               onBlur={validateField.password}
                 />
                 <Button className="bg-accent-island w-full group"
                         type="submit"
-                        disabled={!!fieldErrors || !!formError}
+                        disabled={!isValid}
                 >
-                    <Text className="text-accent-element group-disabled:text-element-dis">Register</Text>
+                    <Text className="text-accent-element group-disabled:text-element-dis">
+                        { isPending ? "Loading..." : "Register" }
+                    </Text>
                 </Button>
                 <Text small className={cn(
                                 "text-red-element opacity-0 h-0 -mt-5 overflow-hidden transition-[height,opacity,margin]",

@@ -2,6 +2,7 @@ import axios, { CreateAxiosDefaults } from "axios"
 import { AccessToken } from "@/shared/service/accessToken"
 import { errorMessage } from "@/shared/service/errors"
 import { AuthAPI } from "@/shared/api/auth"
+import { apiErrorSchema } from "@/shared/api/errors"
 
 const options: CreateAxiosDefaults = {
     baseURL: process.env.NEXT_PUBLIC_API_URL,
@@ -10,6 +11,16 @@ const options: CreateAxiosDefaults = {
 
 const axiosCommon = axios.create(options)
 const axiosAuthorized = axios.create(options)
+
+axiosCommon.interceptors.response.use(
+    config => config,
+    async error => {
+        const parsed = apiErrorSchema.safeParse(error.response?.data)
+        if (parsed.success) return Promise.reject(parsed.data)
+
+        return Promise.reject(error)
+    }
+)
 
 axiosAuthorized.interceptors.request.use(config => {
     const accessToken = AccessToken.get()
