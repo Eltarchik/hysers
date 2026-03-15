@@ -74,6 +74,18 @@ html.light {
   --gold-element: #FFFFFF;
 }
 
+.theme-transition * {
+  --theme-transition-time: 120ms;
+
+  transition:
+    translate var(--theme-transition-time) ease-in,
+    color var(--theme-transition-time),
+    background-color var(--theme-transition-time),
+    border-color var(--theme-transition-time),
+    fill var(--theme-transition-time),
+    stroke var(--theme-transition-time) !important;
+}
+
 body {
   color: var(--element);
   font-family: "Google Sans", Helvetica, sans-serif;
