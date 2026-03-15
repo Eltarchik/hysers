@@ -120,11 +120,11 @@ interface ServersDTO {
 export class ServerAPI {
     private static BASE_URL = "/server"
 
-    static servers = () => {
+    static servers = async (data: ServersDTO) => {
         return mockServers // todo change to api request
     }
 
-    static like = (id: number) => {
+    static like = async (id: number) => {
         // todo add api request
     }
 }

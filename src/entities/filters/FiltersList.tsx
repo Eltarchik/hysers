@@ -16,7 +16,7 @@ import { FilterCardSkeleton } from "@/entities/filters/FilterCardSkeleton"
 
 type Props = ClassProp
 
-export const FiltersBlock = ({ className }: Props) => {
+export const FiltersList = ({ className }: Props) => {
     const t = useTranslations("Entities.Filters")
 
     const filtersLoaded = useFiltersInit()
@@ -28,8 +28,7 @@ export const FiltersBlock = ({ className }: Props) => {
 
     if (!filtersLoaded || !sortLoaded) return <div className={cn("flex flex-col gap-5 w-full", className)}>
         <FilterCardSkeleton className="h-31" />
-        <FilterCardSkeleton className="h-57" />
-        <FilterCardSkeleton className="h-57" />
+        <FilterCardSkeleton count={2} className="h-57" />
     </div>
 
     return <div className={cn("flex flex-col gap-5 w-full", className)}>

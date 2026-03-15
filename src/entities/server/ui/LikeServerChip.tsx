@@ -4,22 +4,21 @@ import { Text } from "@/shared/ui/Text"
 import { Heart } from "lucide-react"
 import { MouseEventHandler } from "react"
 
-
 type Props = {
     likes: number
     liked: boolean
-    onClick?: MouseEventHandler<HTMLButtonElement>
+    onToggleLike?: MouseEventHandler<HTMLButtonElement>
 } & ClassProp
 
-export const ServerLikes = (
-    { likes, liked, className, onClick }: Props
+export const LikeServerChip = (
+    { likes, liked, className, onToggleLike }: Props
 ) => {
     return <button className={ cn(
                         "flex items-center gap-2 px-3 h-10 rounded-full cursor-pointer",
                         liked ? "bg-red-island" : "bg-glade",
                         className
                    )}
-                   onClick={onClick}
+                   onClick={onToggleLike}
     >
         <Text small bold className={ liked ? "text-red-element" : "" }>
             { likes }
