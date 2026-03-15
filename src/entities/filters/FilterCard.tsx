@@ -1,16 +1,19 @@
-import { MouseEventHandler, ReactNode, useMemo, useRef } from "react"
+import { MouseEventHandler, ReactNode, useEffect, useMemo, useRef, useState } from "react"
 import { Heading } from "@/shared/ui/Heading"
 import { ChevronDown } from "lucide-react"
 import { cn } from "@/shared/lib/cn"
 import { useMounted } from "@/shared/hooks/useMounted"
+import { useOvertimeValue } from "@/shared/hooks/useOvertimeValue"
+import { ChildrenProp } from "@/shared/ui/propsPresets"
 
 
-interface Props {
+type Props = {
     title: string
-    children?: ReactNode
     opened?: boolean
     onOpeningSwitch?: MouseEventHandler<HTMLButtonElement>
-}
+} & ChildrenProp
+
+const CLOSED_HEIGHT = 64
 
 export const FilterCard = ({
     title,
@@ -18,25 +21,28 @@ export const FilterCard = ({
     opened,
     onOpeningSwitch
 }: Props) => {
+    const [ openedCardHeight, setOpenedCardHeight ] = useState<number | undefined>()
+    const overtimeOpened = useOvertimeValue(opened, 80)
+
     const contentRef = useRef<HTMLDivElement>(null)
 
-    const mounted = useMounted()
+    useEffect(() => {
+        if (!contentRef.current || !overtimeOpened) return
 
-    const cardHeight = useMemo(() => {
-        const closedHeight = 64
-        if (!mounted || !contentRef.current) return closedHeight
+        const observer = new ResizeObserver(entries => {
+            setOpenedCardHeight(entries[0].target.clientHeight + CLOSED_HEIGHT + 20)
+        })
+        observer.observe(contentRef.current)
 
-        const openedHeight = contentRef.current.clientHeight + closedHeight + 20
-
-        return (opened || opened === undefined) ? openedHeight : closedHeight
-    }, [opened, children, mounted])
+        return () => observer.disconnect()
+    }, [])
 
     return <div className={cn(
                     "flex flex-col gap-5 p-5 w-full rounded-2xl bg-island overflow-hidden",
                     "transition-[height] duration-100 ease-in",
                 )}
                 style={{
-                    height: mounted ? cardHeight : "fit-content"
+                    height: opened ? openedCardHeight ?? "fit-content" : CLOSED_HEIGHT
                 }}
     >
         <button className="flex items-center gap-2 h-6 cursor-pointer"
@@ -59,7 +65,7 @@ export const FilterCard = ({
              )}
              ref={contentRef}
         >
-            { children }
+            { overtimeOpened && children }
         </div>
     </div>
 }

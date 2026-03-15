@@ -1,6 +1,8 @@
 import { Server } from "@/entities/server/types"
 import { TagFilters } from "@/entities/filters/config/tags"
 import { RegionFilters } from "@/entities/filters/config/regions"
+import { axiosCommon } from "@/shared/api/interceptors"
+import { AccessToken } from "@/shared/service/accessToken"
 
 const mockServers: Server[] = [
     {
@@ -96,11 +98,29 @@ const mockServers: Server[] = [
     },
 ]
 
+interface FiltersDto {
+    tags?: TagFilters[]
+    region?: RegionFilters // todo change to array
+}
+
+type SortType = "asc" | "desc"
+
+interface OrderDto {
+    likes?: SortType
+    createdAt?: SortType
+}
+
+interface ServersDTO {
+    page: number
+    quantity: number
+    filters?: FiltersDto
+    order?: OrderDto
+}
+
 export class ServerAPI {
     private static BASE_URL = "/server"
 
     static servers = () => {
-
         return mockServers // todo change to api request
     }
 

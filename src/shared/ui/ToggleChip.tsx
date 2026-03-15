@@ -1,14 +1,13 @@
 import { MouseEventHandler, ReactNode } from "react"
 import { Text } from "@/shared/ui/Text"
 import { cn } from "@/shared/lib/cn"
+import { ChildrenProp, ClassProp } from "@/shared/ui/propsPresets"
 
 
-interface Props {
+type Props = {
     selected?: boolean
-    className?: string
-    children?: ReactNode
     onToggle?: MouseEventHandler<HTMLButtonElement>
-}
+} & ClassProp & ChildrenProp
 
 export const ToggleChip = ({
     selected = false,

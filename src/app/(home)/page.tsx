@@ -1,6 +1,6 @@
 'use client'
 
-import { FiltersBlock } from "@/wigets/FiltersBlock"
+import { FiltersBlock } from "@/entities/filters/FiltersBlock"
 import { ServerCards } from "@/wigets/ServerCards"
 
 export default function Home() {

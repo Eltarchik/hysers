@@ -1,13 +1,12 @@
 import { ReactNode } from "react"
 import { Text } from "@/shared/ui/Text"
 import { cn } from "@/shared/lib/cn"
+import { ChildrenProp, ClassProp } from "@/shared/ui/propsPresets"
 
 
-interface Props {
+type Props = {
     colors?: "basic" | "accent" | "gold"
-    className?: string
-    children?: ReactNode
-}
+} & ClassProp & ChildrenProp
 
 export const SmallChip = (
     { colors = "basic", className, children }: Props

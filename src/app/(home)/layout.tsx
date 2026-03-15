@@ -1,9 +1,8 @@
 import { Header } from "@/wigets/Header"
 import { ReactNode } from "react"
+import { ChildrenProp } from "@/shared/ui/propsPresets"
 
-interface Props {
-    children: ReactNode
-}
+type Props = ChildrenProp
 
 export default async function Layout(
     { children, }: Props

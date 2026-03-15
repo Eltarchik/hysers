@@ -1,15 +1,13 @@
-import { Menu } from "lucide-react"
 import { MouseEventHandler, ReactNode } from "react"
 import { cn } from "@/shared/lib/cn"
+import { ChildrenProp, ClassProp } from "@/shared/ui/propsPresets"
 
 
-interface Props {
+type Props = {
     type?: "button" | "submit" | "reset"
-    className?: string
     disabled?: boolean
-    children?: ReactNode
     onClick?: MouseEventHandler<HTMLButtonElement>
-}
+} & ClassProp & ChildrenProp
 
 export const Button = ({
     type = "button",

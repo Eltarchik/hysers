@@ -1,16 +1,12 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react'
 
-export const useDebounce = <T>(value: T, delay = 400) => {
-  const [ debouncedValue, setDebouncedValue ] = useState(value)
+export const useDebounce = (callback: () => void, delay = 400) => {
+    useEffect(() => {
+        const updater = setTimeout(() => {
+            callback()
+        }, delay)
 
-  useEffect(() => {
-    const updater = setTimeout(() => {
-      setDebouncedValue(value)
-    }, delay)
-
-    return () => clearTimeout(updater)
-  }, [value, delay])
-
-  return debouncedValue
+        return () => clearTimeout(updater)
+    }, [callback, delay])
 }
 

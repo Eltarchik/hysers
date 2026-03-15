@@ -1,15 +1,15 @@
 import { cn } from "@/shared/lib/cn"
+import { ClassProp } from "@/shared/ui/propsPresets"
 import { Text } from "@/shared/ui/Text"
 import { Heart } from "lucide-react"
 import { MouseEventHandler } from "react"
 
 
-interface Props {
+type Props = {
     likes: number
     liked: boolean
-    className?: string
     onClick?: MouseEventHandler<HTMLButtonElement>
-}
+} & ClassProp
 
 export const ServerLikes = (
     { likes, liked, className, onClick }: Props

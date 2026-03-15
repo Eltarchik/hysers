@@ -6,11 +6,11 @@ import { Server } from "@/entities/server/types"
 import { useTranslations } from "next-intl"
 import { Routes } from "@/shared/config/routes"
 import { useRouter } from "next/navigation"
+import { ChildrenProp } from "@/shared/ui/propsPresets"
 
-interface Props {
+type Props = {
     server: Server
-    children?: ReactNode
-}
+} & ChildrenProp
 
 export const ServerCard = (
     { server, children }: Props

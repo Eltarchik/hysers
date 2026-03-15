@@ -11,10 +11,10 @@ import { useFiltersInit, useFiltersSlice } from "@/entities/filters/slices/filte
 import { SortCard } from "@/entities/filters/SortCard"
 import { useSortInit } from "@/entities/filters/slices/sort.slice"
 import { cn } from "@/shared/lib/cn"
+import { ClassProp } from "@/shared/ui/propsPresets"
+import { FilterCardSkeleton } from "@/entities/filters/FilterCardSkeleton"
 
-interface Props {
-    className?: string
-}
+type Props = ClassProp
 
 export const FiltersBlock = ({ className }: Props) => {
     const t = useTranslations("Entities.Filters")
@@ -26,7 +26,11 @@ export const FiltersBlock = ({ className }: Props) => {
     const closedFilters = useSelector((state: RootState) => state.filters.closed)
     const { toggleSelecting, toggleOpening } = useFiltersSlice()
 
-    // todo add skeleton when cached values loading
+    if (!filtersLoaded || !sortLoaded) return <div className={cn("flex flex-col gap-5 w-full", className)}>
+        <FilterCardSkeleton className="h-31" />
+        <FilterCardSkeleton className="h-57" />
+        <FilterCardSkeleton className="h-57" />
+    </div>
 
     return <div className={cn("flex flex-col gap-5 w-full", className)}>
         <SortCard />

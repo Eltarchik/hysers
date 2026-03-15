@@ -6,6 +6,7 @@ import { createPortal } from "react-dom"
 import { cn } from "@/shared/lib/cn"
 import { useOverlay } from "@/shared/hooks/useOverlay"
 import { Text } from "@/shared/ui/Text"
+import { ClassProp } from "@/shared/ui/propsPresets"
 
 export interface CheepSelectItem<T = string> {
     value: T
@@ -18,12 +19,11 @@ interface ListDimensions {
     width: number
 }
 
-interface Props<T> {
+type Props<T> = {
     selectedItem: CheepSelectItem<T>
     items: CheepSelectItem<T>[]
-    className?: string
     onSelect: (item: CheepSelectItem<T>) => void
-}
+} & ClassProp
 
 export const CheepSelect = <T,>({
     selectedItem,

@@ -1,13 +1,12 @@
 import { ReactNode } from "react"
-import {cn} from "@/shared/lib/cn";
+import { cn } from "@/shared/lib/cn";
+import { ChildrenProp, ClassProp } from "@/shared/ui/propsPresets"
 
 
-interface Props {
+type Props = {
     bold?: boolean
     small?: boolean
-    className?: string
-    children?: ReactNode
-}
+} & ClassProp & ChildrenProp
 
 export const Text = (
     { bold, small, className, children }: Props

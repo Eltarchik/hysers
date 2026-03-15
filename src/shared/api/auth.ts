@@ -24,7 +24,6 @@ export class AuthAPI {
 
     static register = async (data: RegisterDTO): Promise<AuthRequest> => {
         const resp = await axiosCommon.post(`${ this.BASE_URL }/register`, data)
-
         const parsed = authRequestSchema.safeParse(resp.data)
         if (!parsed.success) throw parsed.error
 
