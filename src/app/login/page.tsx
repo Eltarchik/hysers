@@ -13,10 +13,10 @@ import { z } from "zod"
 import { cn } from "@/shared/lib/cn"
 import { useOvertimeValue } from "@/shared/hooks/useOvertimeValue"
 import { useMutation } from "@tanstack/react-query"
-import { AuthAPI } from "@/shared/api/auth"
+import { authAPI } from "@/shared/api/auth"
 import { useRouter } from "next/navigation"
 import { ChangeEvent, useEffect, useRef } from "react"
-import { isApiError } from "@/shared/api/errors"
+import { isApiError } from "@/shared/api/responseSchemas"
 
 const formDataShema = z.object({
     email: z.email("Invalid email"),
@@ -35,11 +35,12 @@ export default function Login() {
 
     const { mutate, isPending } = useMutation({
         mutationFn: async () => {
-            return await AuthAPI.login(formData)
+            return await authAPI.login(formData)
         },
         onError: async (error) => {
             if (!isApiError(error)) return
-            setFormError(error.message)
+            if (error.status === "validation_error") setFormError(Object.values(error.errors)[0][0])
+            else setFormError(error.message)
         },
         onSuccess: async () => {
             router.push(Routes.HOME)

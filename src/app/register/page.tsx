@@ -7,7 +7,7 @@ import { PasswordInput } from "@/entities/auth/PasswordInput"
 import { z } from "zod"
 import { ChangeEvent, useCallback, useEffect, useRef } from "react"
 import { useMutation } from "@tanstack/react-query"
-import { AuthAPI } from "@/shared/api/auth"
+import { authAPI } from "@/shared/api/auth"
 import { cn } from "@/shared/lib/cn"
 import { useOvertimeValue } from "@/shared/hooks/useOvertimeValue"
 import { useRouter } from "next/navigation"
@@ -16,7 +16,7 @@ import { Button } from "@/shared/ui/Button"
 import { LoginWithDiscordButton } from "@/entities/auth/LoginWithDiscordButton"
 import Link from "next/link"
 import { Heading } from "@/shared/ui/Heading"
-import { isApiError } from "@/shared/api/errors"
+import { isApiError } from "@/shared/api/responseSchemas"
 
 const formDataShema = z.object({
     name: z.string().min(3, "The name must contain at least 3 characters"),
@@ -37,11 +37,12 @@ export default function Register() {
 
     const { mutate, isPending } = useMutation({
         mutationFn: async () => {
-            return await AuthAPI.register(formData)
+            return await authAPI.register(formData)
         },
         onError: async (error) => {
             if (!isApiError(error)) return
-            setFormError(error.message)
+            if (error.status === "validation_error") setFormError(Object.values(error.errors)[0][0])
+            else setFormError(error.message)
         },
         onSuccess: async () => {
             router.push(Routes.HOME)

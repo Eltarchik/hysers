@@ -1,8 +1,8 @@
 import axios, { CreateAxiosDefaults } from "axios"
 import { AccessToken } from "@/shared/service/accessToken"
 import { errorMessage } from "@/shared/service/errors"
-import { AuthAPI } from "@/shared/api/auth"
-import { apiErrorSchema } from "@/shared/api/errors"
+import { authAPI } from "@/shared/api/auth"
+import { badResponseSchema } from "@/shared/api/responseSchemas"
 
 const options: CreateAxiosDefaults = {
     baseURL: process.env.NEXT_PUBLIC_API_URL,
@@ -15,7 +15,7 @@ const axiosAuthorized = axios.create(options)
 axiosCommon.interceptors.response.use(
     config => config,
     async error => {
-        const parsed = apiErrorSchema.safeParse(error.response?.data)
+        const parsed = badResponseSchema.safeParse(error.response?.data)
         if (parsed.success) return Promise.reject(parsed.data)
 
         return Promise.reject(error)
@@ -37,23 +37,19 @@ axiosAuthorized.interceptors.response.use(
     async error => {
         const originalRequest = error.config
 
-        if (
-            (error?.response?.status === 401
-            || errorMessage(error) === "jwt expected"
-            || errorMessage(error) === "jwt must be provided")
+        if ((error?.response?.status === 401
+            || errorMessage(error) === "Unauthorized")
             && error.config
             && !error.config._isRetry
         ) {
             originalRequest._isRetry = true
 
             try {
-                await AuthAPI.refresh()
+                await authAPI.refresh()
                 return axiosAuthorized.request(originalRequest)
 
             } catch (error) {
-                if (errorMessage(error) === "jwt expected"
-                    || errorMessage(error) === "jwt must be provided"
-                ) {
+                if (errorMessage(error) === "Unauthorized") {
                     AccessToken.remove()
                 }
             }
