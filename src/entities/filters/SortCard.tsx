@@ -3,7 +3,7 @@
 import { ArrowDown } from "lucide-react"
 import { FilterCard } from "@/entities/filters/FilterCard"
 import { useTranslations } from "next-intl"
-import { useSortMutation } from "@/entities/filters/slices/sort.slice"
+import { useSortMutation } from "@/entities/filters/slices/sortSlice"
 import { RootState } from "@/shared/config/store"
 import { useSelector } from "react-redux"
 import { cn } from "@/shared/lib/cn"

@@ -1,11 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit'
-import { sortReducer } from "@/entities/filters/slices/sort.slice"
-import { filtersReducer } from "@/entities/filters/slices/filters.slice"
+import { sortReducer } from "@/entities/filters/slices/sortSlice"
+import { filtersReducer } from "@/entities/filters/slices/filtersSlice"
 
 export const store = configureStore({
     reducer: {
         filters: filtersReducer,
-        sort: sortReducer
+        sort: sortReducer,
     }
 })
 

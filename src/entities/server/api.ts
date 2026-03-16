@@ -1,8 +1,6 @@
 import { Server } from "@/entities/server/types"
 import { TagFilters } from "@/entities/filters/config/tags"
 import { RegionFilters } from "@/entities/filters/config/regions"
-import { axiosCommon } from "@/shared/api/interceptors"
-import { AccessToken } from "@/shared/service/accessToken"
 
 const mockServers: Server[] = [
     {
@@ -117,14 +115,16 @@ interface ServersDTO {
     order?: OrderDto
 }
 
-export class ServerAPI {
-    private static BASE_URL = "/server"
+class ServerAPI {
+    private BASE_URL = "/server"
 
-    static servers = async (data: ServersDTO) => {
+    servers = async (data: ServersDTO) => {
         return mockServers // todo change to api request
     }
 
-    static like = async (id: number) => {
+    like = async (id: number) => {
         // todo add api request
     }
 }
+
+export const serverAPI = new ServerAPI()

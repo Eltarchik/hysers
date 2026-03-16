@@ -1,5 +1,5 @@
 import { ServerCard } from "@/entities/server/ui/ServerCard"
-import { ServerAPI } from "@/entities/server/api"
+import { serverAPI } from "@/entities/server/api"
 import { LikeServerChip } from "@/entities/server/ui/LikeServerChip"
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import { useServersKey } from "@/entities/server/ui/queryKeys"
@@ -14,12 +14,12 @@ export const ServersList = () => {
 
     const { data: servers, isPending } = useQuery({
         queryKey: serversKey,
-        queryFn: () => ServerAPI.servers({ page: 1, quantity: 30 }),
+        queryFn: () => serverAPI.servers({ page: 1, quantity: 30 }),
     })
 
     const { mutate: like } = useMutation({
         mutationFn: async (id: number) => {
-            return await ServerAPI.like(id)
+            return await serverAPI.like(id)
         },
         onMutate: async (id: number) => {
             await queryClient.cancelQueries({ queryKey: serversKey })

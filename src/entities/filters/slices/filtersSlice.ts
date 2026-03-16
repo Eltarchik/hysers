@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction, current } from '@reduxjs/toolkit'
 import { useDispatch } from "react-redux"
 import { Filters } from "@/entities/filters/types"
-import { useCallback, useEffect } from "react"
+import { useCallback, } from "react"
 import { useSliceInit } from "@/shared/hooks/useSliceInit"
 
 interface FiltersState {
