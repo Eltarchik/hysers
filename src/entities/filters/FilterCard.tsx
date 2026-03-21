@@ -11,6 +11,7 @@ type Props = {
     title: string
     opened?: boolean
     onOpeningSwitch?: MouseEventHandler<HTMLButtonElement>
+    clipContent?: boolean
 } & ChildrenProp
 
 const CLOSED_HEIGHT = 64
@@ -19,7 +20,8 @@ export const FilterCard = ({
     title,
     children,
     opened,
-    onOpeningSwitch
+    onOpeningSwitch,
+    clipContent = true,
 }: Props) => {
     const [ openedCardHeight, setOpenedCardHeight ] = useState<number | undefined>()
     const overtimeOpened = useOvertimeValue(opened, 80)
@@ -38,8 +40,9 @@ export const FilterCard = ({
     }, [])
 
     return <div className={cn(
-                    "flex flex-col gap-5 p-5 w-full rounded-2xl bg-island overflow-hidden",
+                    "flex flex-col gap-5 p-5 w-full rounded-2xl bg-island",
                     "transition-[height] duration-100 ease-in",
+                    clipContent && "overflow-hidden"
                 )}
                 style={{
                     height: opened ? openedCardHeight ?? "fit-content" : CLOSED_HEIGHT

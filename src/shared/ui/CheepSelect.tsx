@@ -23,6 +23,7 @@ type Props<T> = {
     selectedItem: CheepSelectItem<T>
     items: CheepSelectItem<T>[]
     onSelect: (item: CheepSelectItem<T>) => void
+    onChangeOpened?: (opened: boolean) => void
 } & ClassProp
 
 export const CheepSelect = <T,>({
@@ -30,38 +31,14 @@ export const CheepSelect = <T,>({
     items,
     className,
     onSelect,
+    onChangeOpened
 }: Props<T>) => {
-    const [ opened, setOpened, ref ] = useOverlay<HTMLDivElement>()
-    const [ position, setPosition ] = useState<ListDimensions | null>(null)
-
     const listRef = useRef<HTMLDivElement>(null)
-
-    const updatePosition = () => {
-        if (ref.current) {
-            const rect = ref.current.getBoundingClientRect()
-            setPosition({
-                top: rect.bottom,
-                left: rect.left,
-                width: rect.width
-            })
-        }
-    }
+    const [ opened, setOpened, ref ] = useOverlay<HTMLDivElement>()
 
     useEffect(() => {
-        if (!opened) {
-            setPosition(null)
-            return
-        }
-
-        updatePosition()
-        window.addEventListener("scroll", updatePosition, true)
-        window.addEventListener("resize", updatePosition)
-
-        return () => {
-            window.removeEventListener("scroll", updatePosition, true)
-            window.removeEventListener("resize", updatePosition)
-        }
-    }, [ opened ])
+        onChangeOpened?.(opened)
+    }, [opened, onChangeOpened])
 
     return <div className={cn("relative flex flex-col", className)} ref={ref}>
         <button className="flex justify-between items-center px-5 h-10 w-full rounded-full bg-glade cursor-pointer"
@@ -76,14 +53,9 @@ export const CheepSelect = <T,>({
             />
         </button>
 
-        { opened && position && createPortal(
-            <div className="z-20 absolute translate-y-2 flex flex-col p-2 rounded-2xl bg-glade shadow-2xl shadow-space"
+        { opened &&
+            <div className="z-20 absolute top-full translate-y-2 flex flex-col p-2 w-full rounded-2xl bg-glade shadow-2xl shadow-space"
                  ref={listRef}
-                 style={{
-                     top: position.top,
-                     left: position.left,
-                     width: position.width
-                 }}
                  onMouseDown={event => event.stopPropagation()}
             >
                 { items.map((item, i) =>
@@ -103,8 +75,7 @@ export const CheepSelect = <T,>({
                         </Text>
                     </button>
                 )}
-            </div>,
-            document.body
-        )}
+            </div>
+        }
     </div>
 }
