@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useState } from "react"
 import { useDebounce } from "@/shared/hooks/useDebounce"
 
 export const useDebouncedValue = <T>(value: T, delay = 400) => {

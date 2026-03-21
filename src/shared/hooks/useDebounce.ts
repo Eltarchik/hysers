@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect } from "react"
 
 export const useDebounce = (callback: () => void, delay = 400) => {
     useEffect(() => {

@@ -3,7 +3,7 @@ import { useEffect, useState } from "react"
 
 export const useSliceInit = <SliceState extends {}>(
     key: string,
-    setter: (payload: SliceState) => {payload: SliceState, type: string},
+    setter: (payload: SliceState) => { payload: SliceState, type: string },
     storage?: Storage,
 ) => {
     const dispatch = useDispatch()
@@ -16,13 +16,13 @@ export const useSliceInit = <SliceState extends {}>(
         if (saved) {
             try {
                 const parsed = JSON.parse(saved) as SliceState
-                // todo add zud validation
+                // todo add zod validation
                 dispatch(setter(parsed))
-                setLoaded(true)
             } catch (e) {
-                console.error('Failed to parse filters state from storage', e)
+                console.error("Failed to parse filters state from storage", e)
             }
         }
+        setLoaded(true)
     }, [dispatch])
 
     return loaded

@@ -1,4 +1,4 @@
-import { createSlice, current, PayloadAction } from '@reduxjs/toolkit'
+import { createSlice, current, PayloadAction } from "@reduxjs/toolkit"
 import { useDispatch } from "react-redux"
 import { SortCriteria, SortDirection } from "@/entities/filters/types"
 import { useCallback } from "react"
@@ -10,7 +10,7 @@ interface SortState {
     closed: boolean
 }
 
-const STORAGE_KEY = 'slice-state'
+const STORAGE_KEY = "slice-state"
 
 const initialState: SortState = {
     criteria: SortCriteria.HOT,
@@ -23,7 +23,7 @@ const saveToStore = (state: SortState) => {
 }
 
 const sortSlice = createSlice({
-    name: 'sort',
+    name: "sort",
     initialState,
     reducers: {
         setSort(state, { payload }: PayloadAction<SortState>) {

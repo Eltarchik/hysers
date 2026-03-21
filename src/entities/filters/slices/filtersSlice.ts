@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction, current } from '@reduxjs/toolkit'
+import { createSlice, PayloadAction, current } from "@reduxjs/toolkit"
 import { useDispatch } from "react-redux"
 import { Filters } from "@/entities/filters/types"
 import { useCallback, } from "react"
@@ -14,7 +14,7 @@ type togglePayload = PayloadAction<{
     item: string
 }>
 
-const STORAGE_KEY = 'filters-state'
+const STORAGE_KEY = "filters-state"
 
 const initialState: FiltersState = {
     selected: Object.fromEntries(
@@ -28,7 +28,7 @@ const saveToStore = (state: FiltersState) => {
 }
 
 const filtersSlice = createSlice({
-    name: 'filters',
+    name: "filters",
     initialState,
     reducers: {
         setFilters(state, { payload }: PayloadAction<FiltersState>) {

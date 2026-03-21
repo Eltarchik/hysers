@@ -1,4 +1,4 @@
-import { configureStore } from '@reduxjs/toolkit'
+import { configureStore } from "@reduxjs/toolkit"
 import { sortReducer } from "@/entities/filters/slices/sortSlice"
 import { filtersReducer } from "@/entities/filters/slices/filtersSlice"
 
