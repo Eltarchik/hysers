@@ -17,6 +17,7 @@ import { authAPI } from "@/shared/api/auth"
 import { useRouter } from "next/navigation"
 import { ChangeEvent, useEffect, useRef } from "react"
 import { isApiError } from "@/shared/api/responseSchemas"
+import { ArrowLeft } from "lucide-react"
 
 const formDataShema = z.object({
     email: z.email("Invalid email"),
@@ -80,9 +81,14 @@ export default function Login() {
         return () => clearTimeout(timeout)
     }, [formData])
 
-    return <div className="flex justify-center items-center h-full w-full">
+    return <div className="flex flex-1 justify-center items-center w-full">
         <div className="flex items-center flex-col gap-5 p-5 w-120 rounded-2xl bg-island">
-            <Heading>Login</Heading>
+            <div className="grid grid-cols-[40px_1fr_40px] items-center w-full">
+                <Link href={Routes.HOME} className="flex justify-center items-center size-8 group">
+                    <ArrowLeft className="text-element-sub group-hover:text-element-imp transition-colors duration-80 ease-in" />
+                </Link>
+                <Heading className="mx-auto">Login</Heading>
+            </div>
             <form className="flex flex-col gap-5 w-full"
                   onSubmit={submit}
             >

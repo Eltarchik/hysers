@@ -17,6 +17,7 @@ import { LoginWithDiscordButton } from "@/entities/auth/LoginWithDiscordButton"
 import Link from "next/link"
 import { Heading } from "@/shared/ui/Heading"
 import { isApiError } from "@/shared/api/responseSchemas"
+import { ArrowLeft } from "lucide-react"
 
 const formDataShema = z.object({
     name: z.string().min(3, "The name must contain at least 3 characters"),
@@ -84,9 +85,14 @@ export default function Register() {
         return () => clearTimeout(timeout)
     }, [formData])
 
-    return <div className="flex justify-center items-center h-full w-full">
+    return <div className="flex flex-1 justify-center items-center w-full">
         <div className="flex items-center flex-col gap-5 p-5 w-120 rounded-2xl bg-island">
-            <Heading>Register</Heading>
+            <div className="grid grid-cols-[40px_1fr_40px] items-center w-full">
+                <Link href={Routes.HOME} className="flex justify-center items-center size-8 group">
+                    <ArrowLeft className="text-element-sub group-hover:text-element-imp transition-colors duration-80 ease-in" />
+                </Link>
+                <Heading className="mx-auto">Register</Heading>
+            </div>
             <form className="flex flex-col gap-5 w-full"
                   onSubmit={submit}
             >

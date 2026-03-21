@@ -60,9 +60,11 @@ export const Header = () => {
             <ChangeThemeButton />
             <ChangeLocaleButton />
             <div className={cn("flex justify-end flex-1 opacity-0 transition-opacity duration-80 ease-in", !userIsPending && "opacity-100")}>
-                { user
-                    ? <UserMetaCard user={user} />
-                    : <SIgnInButton />
+                { !user
+                    ? <SIgnInButton />
+                    : <div className="relative w-full">
+                        <UserMetaCard user={ user } />
+                    </div>
                 }
             </div>
         </div>
