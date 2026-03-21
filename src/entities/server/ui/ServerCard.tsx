@@ -1,12 +1,12 @@
 import { Heading } from "@/shared/ui/Heading"
 import { Text } from "@/shared/ui/Text"
 import { SmallChip } from "@/shared/ui/SmallChip"
-import { ReactNode } from "react"
 import { Server } from "@/entities/server/types"
 import { useTranslations } from "next-intl"
 import { Routes } from "@/shared/config/routes"
 import { useRouter } from "next/navigation"
 import { ChildrenProp } from "@/shared/ui/propsPresets"
+import Image from "next/image"
 
 type Props = {
     server: Server
@@ -22,7 +22,18 @@ export const ServerCard = (
     return <div className="flex flex-col overflow-hidden rounded-2xl bg-island cursor-pointer"
                 onClick={() => router.push(href)}
     >
-        <div className="w-full h-40 bg-glade" />
+        <div className="relative w-full h-40 bg-glade">
+            { server.poster &&
+                <Image className="object-cover opacity-0 transition-opacity duration-80 ease-in"
+                       src={server.poster}
+                       alt="banner"
+                       sizes="380px"
+                       fill
+                       loading="eager"
+                       onLoad={event => event.currentTarget.style.opacity = "1"}
+                /> // todo add protection from a bad url
+            }
+        </div>
         <div className="relative flex flex-col gap-2 p-5 w-full">
             { children }
             <Heading className="truncate leading-8">

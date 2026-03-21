@@ -2,27 +2,18 @@ import { TagFilters } from "@/entities/filters/config/tags"
 import { RegionFilters } from "@/entities/filters/config/regions"
 import { z } from "zod"
 
-const serverSchema = z.object({
+export const serverSchema = z.object({
     id: z.number(),
     nameId: z.string(),
     name: z.string(),
     description: z.string(),
-    poster: z.string().nullable(),
+    poster: z.string().nullish(),
     likes: z.number(),
-    tags: z.string(),
-    region: z.string(),
+    liked: z.boolean(),
+    isOnline: z.boolean().nullish(),
+    players: z.number().nullish(),
+    tags: z.enum(TagFilters).array(),
+    region: z.enum(RegionFilters),
 })
 
-export interface Server {
-    id: number
-    nameId: string
-    name: string
-    description: string
-    poster?: string
-    likes: number
-    liked: boolean // todo
-    isOnline?: boolean // todo
-    players?: number // todo
-    tags: TagFilters[]
-    region: RegionFilters
-}
+export type Server = z.infer<typeof serverSchema>

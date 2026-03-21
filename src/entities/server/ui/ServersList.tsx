@@ -14,7 +14,10 @@ export const ServersList = () => {
 
     const { data: servers, isPending } = useQuery({
         queryKey: serversKey,
-        queryFn: () => serverAPI.servers({ page: 1, quantity: 30 }),
+        queryFn: async () => {
+            const resp = await serverAPI.servers({ page: 1, quantity: 30 })
+            if (resp.status === "success") return resp.data
+        },
     })
 
     const { mutate: like } = useMutation({
