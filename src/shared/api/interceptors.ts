@@ -12,16 +12,6 @@ const options: CreateAxiosDefaults = {
 const axiosCommon = axios.create(options)
 const axiosAuthorized = axios.create(options)
 
-axiosCommon.interceptors.response.use(
-    config => config,
-    async error => {
-        const parsed = badResponseSchema.safeParse(error.response?.data)
-        if (parsed.success) return Promise.reject(parsed.data)
-
-        return Promise.reject(error)
-    }
-)
-
 axiosAuthorized.interceptors.request.use(config => {
     const accessToken = AccessToken.get()
 

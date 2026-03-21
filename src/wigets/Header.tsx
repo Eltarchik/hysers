@@ -14,6 +14,8 @@ import { UserMetaCard } from "@/entities/user/UserMetaCard"
 import { useQuery } from "@tanstack/react-query"
 import { userAPI } from "@/entities/user/api"
 import { serverAPI } from "@/entities/server/api"
+import { errorHandler } from "@/shared/api/responseSchemas"
+import { cn } from "@/shared/lib/cn"
 
 export const Header = () => {
     const { data: user, isPending: userIsPending } = useQuery({
@@ -21,6 +23,11 @@ export const Header = () => {
         queryFn: async () => {
             const data = await userAPI.meta()
             if (data.status === "success") return data.data
+        },
+        retry: (failureCount, error: any) => {
+            const err = errorHandler(error)
+            if (err?.status === "error" && (err.code === 401 || err.message === "Unauthorized")) return false
+            return failureCount < 3
         },
     })
 
@@ -52,10 +59,12 @@ export const Header = () => {
         <div className="flex gap-5">
             <ChangeThemeButton />
             <ChangeLocaleButton />
-            { !userIsPending && (user
-                ? <UserMetaCard user={user} className="ml-auto" />
-                : <SIgnInButton/>
-            )}
+            <div className={cn("flex justify-end flex-1 opacity-0 transition-opacity duration-80 ease-in", !userIsPending && "opacity-100")}>
+                { user
+                    ? <UserMetaCard user={user} />
+                    : <SIgnInButton/>
+                }
+            </div>
         </div>
     </header>
 }

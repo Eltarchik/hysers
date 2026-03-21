@@ -31,3 +31,8 @@ export const isApiError = (error: unknown): error is BadResponse => {
     const parsed = badResponseSchema.safeParse(error)
     return parsed.success
 }
+
+export const errorHandler = (error: any) => {
+    const parsed = badResponseSchema.safeParse(error.response?.data)
+    if (parsed.success) return parsed.data
+}
