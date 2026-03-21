@@ -1,9 +1,46 @@
 {
   "Shared": {
-
+    "Auth": {
+      "signIn": "Войти",
+      "loginWithDiscord": "Войти через Discord"
+    },
+    "Header": {
+      "findServer": "Найти сервер",
+      "serversLoading": "... серверов",
+      "serversCount": "{count, plural, one {# сервер} few {# сервера} many {# серверов} other {# серверов}}"
+    }
   },
   "Pages": {
-
+    "Login": {
+      "title": "Вход",
+      "email": "Email",
+      "password": "Пароль",
+      "submit": "Войти",
+      "loading": "Загрузка...",
+      "or": "ИЛИ",
+      "noAccount": "Нет аккаунта?",
+      "signUp": "Зарегистрируйся",
+      "validation": {
+        "invalidEmail": "Некорректный email",
+        "passwordRequired": "Введите пароль"
+      }
+    },
+    "Register": {
+      "title": "Регистрация",
+      "name": "Имя",
+      "email": "Email",
+      "password": "Пароль",
+      "submit": "Зарегистрироваться",
+      "loading": "Загрузка...",
+      "or": "ИЛИ",
+      "hasAccount": "Уже есть аккаунт?",
+      "signIn": "Войди",
+      "validation": {
+        "nameMin": "Имя должно быть не короче 3 символов",
+        "invalidEmail": "Некорректный email",
+        "passwordMin": "Пароль должен быть не короче 6 символов"
+      }
+    }
   },
   "Entities": {
     "Filters": {

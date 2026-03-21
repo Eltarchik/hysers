@@ -1,5 +1,3 @@
-export const LIGHT_THEME = "light"
-
 let timeout: NodeJS.Timeout | null = null
 
 export const enableThemeTogglingAnimation = () => {

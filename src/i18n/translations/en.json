@@ -1,9 +1,46 @@
 {
   "Shared": {
-
+    "Auth": {
+      "signIn": "Sign In",
+      "loginWithDiscord": "Login with Discord"
+    },
+    "Header": {
+      "findServer": "Find server",
+      "serversLoading": "... servers",
+      "serversCount": "{count, plural, one {# server} other {# servers}}"
+    }
   },
   "Pages": {
-
+    "Login": {
+      "title": "Login",
+      "email": "Email",
+      "password": "Password",
+      "submit": "Login",
+      "loading": "Loading...",
+      "or": "OR",
+      "noAccount": "Don't have an account?",
+      "signUp": "Sign up",
+      "validation": {
+        "invalidEmail": "Invalid email",
+        "passwordRequired": "Password is required"
+      }
+    },
+    "Register": {
+      "title": "Register",
+      "name": "Name",
+      "email": "Email",
+      "password": "Password",
+      "submit": "Register",
+      "loading": "Loading...",
+      "or": "OR",
+      "hasAccount": "Already have an account?",
+      "signIn": "Sign in",
+      "validation": {
+        "nameMin": "The name must contain at least 3 characters",
+        "invalidEmail": "Invalid email",
+        "passwordMin": "The password must contain at least 6 characters"
+      }
+    }
   },
   "Entities": {
     "Filters": {

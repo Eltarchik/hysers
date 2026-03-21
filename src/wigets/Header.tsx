@@ -16,8 +16,10 @@ import { userAPI } from "@/entities/user/api"
 import { serverAPI } from "@/entities/server/api"
 import { errorHandler } from "@/shared/api/responseSchemas"
 import { cn } from "@/shared/lib/cn"
+import { useTranslations } from "next-intl"
 
 export const Header = () => {
+    const t = useTranslations("Shared.Header")
     const { data: user, isPending: userIsPending } = useQuery({
         queryKey: ["user", "meta"],
         queryFn: async () => {
@@ -48,11 +50,13 @@ export const Header = () => {
                 <Heading size="lg">HyGames</Heading>
             </Link>
             <SmallChip colors={"accent"} className="hidden 2xl:flex">
-                { serversQuantity ?? "..." } servers
+                { serversQuantity != null
+                    ? t("serversCount", { count: serversQuantity })
+                    : t("serversLoading") }
             </SmallChip>
         </div>
 
-        <Input type="search" placeholder="Find server">
+        <Input type="search" placeholder={t("findServer")}>
             <Search color="var(--element-dis)" />
         </Input>
 

@@ -15,23 +15,23 @@ import { useOvertimeValue } from "@/shared/hooks/useOvertimeValue"
 import { useMutation } from "@tanstack/react-query"
 import { authAPI } from "@/shared/api/auth"
 import { useRouter } from "next/navigation"
-import { ChangeEvent, useEffect, useRef } from "react"
+import { ChangeEvent, useEffect, useMemo, useRef } from "react"
 import { isApiError } from "@/shared/api/responseSchemas"
 import { ArrowLeft } from "lucide-react"
-
-const formDataShema = z.object({
-    email: z.email("Invalid email"),
-    password: z.string().min(1, "Password is required"),
-})
-
-type FormData = z.infer<typeof formDataShema>
-
-const initialFormData: FormData = {
-    email: "",
-    password: "",
-}
+import { useTranslations } from "next-intl"
 
 export default function Login() {
+    const t = useTranslations("Pages.Login")
+    const formDataShema = useMemo(
+        () =>
+            z.object({
+                email: z.email(t("validation.invalidEmail")),
+                password: z.string().min(1, t("validation.passwordRequired")),
+            }),
+        [t]
+    )
+    type FormData = z.infer<typeof formDataShema>
+
     const router = useRouter()
 
     const { mutate, isPending } = useMutation({
@@ -47,6 +47,11 @@ export default function Login() {
             router.push(Routes.HOME)
         }
     })
+
+    const initialFormData: FormData = {
+        email: "",
+        password: "",
+    }
 
     const {
         formData,
@@ -87,19 +92,19 @@ export default function Login() {
                 <Link href={Routes.HOME} className="flex justify-center items-center size-8 group">
                     <ArrowLeft className="text-element-sub group-hover:text-element-imp transition-colors duration-80 ease-in" />
                 </Link>
-                <Heading className="mx-auto">Login</Heading>
+                <Heading className="mx-auto">{t("title")}</Heading>
             </div>
             <form className="flex flex-col gap-5 w-full"
                   onSubmit={submit}
             >
                 <Input className="bg-glade"
-                       placeholder="Email"
+                       placeholder={t("email")}
                        errorMsg={formData.email.length ? fieldErrors?.email : undefined}
                        onChange={e => onFieldChange(e, "email")}
                        onBlur={validateField.email}
                 />
                 <PasswordInput className="bg-glade"
-                               placeholder="Password"
+                               placeholder={t("password")}
                                errorMsg={formData.password.length ? fieldErrors?.password : undefined}
                                onChange={e => onFieldChange(e, "password")}
                                onBlur={validateField.password}
@@ -110,7 +115,7 @@ export default function Login() {
                 >
                     <Text className="text-accent-element group-disabled:text-element-dis">
                         {/* todo add Loader component */}
-                        { isPending ? "Loading..." : "Login" }
+                        { isPending ? t("loading") : t("submit") }
                     </Text>
                 </Button>
                 <Text small className={cn(
@@ -122,13 +127,13 @@ export default function Login() {
                 </Text>
             </form>
             <div className="flex flex-col gap-1 w-full">
-                <Text small className="text-element-sub text-center">OR</Text>
+                <Text small className="text-element-sub text-center">{t("or")}</Text>
                 <LoginWithDiscordButton />
             </div>
             <span className="flex gap-1">
-                <Text small className="text-element-sub">Нет аккаунта?</Text>
+                <Text small className="text-element-sub">{t("noAccount")}</Text>
                 <Link href={Routes.REGISTER}>
-                    <Text small className="text-accent-element">Зарегистрируйся</Text>
+                    <Text small className="text-accent-element">{t("signUp")}</Text>
                 </Link>
             </span>
         </div>

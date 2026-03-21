@@ -124,6 +124,7 @@ class ServerAPI {
     private serversSchema = createApiResponseSchema(serverSchema.array().nullish())
     servers = async (data: ServersDTO) => {
         const resp = await axiosAuthorized.post(this.BASE_URL, data)
+        console.log(resp)
         const parsed = this.serversSchema.safeParse(resp.data)
         if (!parsed.success) throw parsed.error
 

@@ -5,7 +5,7 @@ import { Text } from "@/shared/ui/Text"
 import { Routes } from "@/shared/config/routes"
 import { PasswordInput } from "@/entities/auth/PasswordInput"
 import { z } from "zod"
-import { ChangeEvent, useCallback, useEffect, useRef } from "react"
+import { ChangeEvent, useCallback, useEffect, useMemo, useRef } from "react"
 import { useMutation } from "@tanstack/react-query"
 import { authAPI } from "@/shared/api/auth"
 import { cn } from "@/shared/lib/cn"
@@ -18,22 +18,22 @@ import Link from "next/link"
 import { Heading } from "@/shared/ui/Heading"
 import { isApiError } from "@/shared/api/responseSchemas"
 import { ArrowLeft } from "lucide-react"
-
-const formDataShema = z.object({
-    name: z.string().min(3, "The name must contain at least 3 characters"),
-    email: z.email("Invalid email"),
-    password: z.string().min(6, "The password must contain at least 6 characters"),
-})
-
-type FormData = z.infer<typeof formDataShema>
-
-const initialFormData: FormData = {
-    name: "",
-    email: "",
-    password: "",
-}
+import { useTranslations } from "next-intl"
 
 export default function Register() {
+    const t = useTranslations("Pages.Register")
+    const formDataShema = useMemo(
+        () =>
+            z.object({
+                name: z.string().min(3, t("validation.nameMin")),
+                email: z.email(t("validation.invalidEmail")),
+                password: z.string().min(6, t("validation.passwordMin")),
+            }),
+        [t]
+    )
+
+    type FormData = z.infer<typeof formDataShema>
+
     const router = useRouter()
 
     const { mutate, isPending } = useMutation({
@@ -49,6 +49,12 @@ export default function Register() {
             router.push(Routes.HOME)
         }
     })
+
+    const initialFormData: FormData = {
+        name: "",
+        email: "",
+        password: "",
+    }
 
     const {
         formData,
@@ -91,25 +97,25 @@ export default function Register() {
                 <Link href={Routes.HOME} className="flex justify-center items-center size-8 group">
                     <ArrowLeft className="text-element-sub group-hover:text-element-imp transition-colors duration-80 ease-in" />
                 </Link>
-                <Heading className="mx-auto">Register</Heading>
+                <Heading className="mx-auto">{t("title")}</Heading>
             </div>
             <form className="flex flex-col gap-5 w-full"
                   onSubmit={submit}
             >
                 <Input className="bg-glade"
-                       placeholder="Name"
+                       placeholder={t("name")}
                        errorMsg={formData.name.length ? fieldErrors?.name : undefined}
                        onChange={e => onFieldChange(e, "name")}
                        onBlur={validateField.name}
                 />
                 <Input className="bg-glade"
-                       placeholder="Email"
+                       placeholder={t("email")}
                        errorMsg={formData.email.length ? fieldErrors?.email : undefined}
                        onChange={e => onFieldChange(e, "email")}
                        onBlur={validateField.email}
                 />
                 <PasswordInput className="bg-glade"
-                               placeholder="Password"
+                               placeholder={t("password")}
                                errorMsg={formData.password.length ? fieldErrors?.password : undefined}
                                onChange={e => onFieldChange(e, "password")}
                                onBlur={validateField.password}
@@ -119,7 +125,7 @@ export default function Register() {
                         disabled={!isValid}
                 >
                     <Text className="text-accent-element group-disabled:text-element-dis">
-                        { isPending ? "Loading..." : "Register" }
+                        { isPending ? t("loading") : t("submit") }
                     </Text>
                 </Button>
                 <Text small className={cn(
@@ -131,13 +137,13 @@ export default function Register() {
                 </Text>
             </form>
             <div className="flex flex-col gap-1 w-full">
-                <Text small className="text-element-sub text-center">OR</Text>
+                <Text small className="text-element-sub text-center">{t("or")}</Text>
                 <LoginWithDiscordButton />
             </div>
             <span className="flex gap-1">
-                <Text small className="text-element-sub">Уже есть аккаунт?</Text>
+                <Text small className="text-element-sub">{t("hasAccount")}</Text>
                 <Link href={Routes.LOGIN}>
-                    <Text small className="text-accent-element">Войди</Text>
+                    <Text small className="text-accent-element">{t("signIn")}</Text>
                 </Link>
             </span>
         </div>

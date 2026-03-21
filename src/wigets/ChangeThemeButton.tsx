@@ -2,7 +2,7 @@
 
 import { Moon, Sun } from "lucide-react"
 import { Button } from "@/shared/ui/Button"
-import { LIGHT_THEME, enableThemeTogglingAnimation } from "@/shared/config/theme"
+import { enableThemeTogglingAnimation } from "@/shared/config/theme"
 import { cn } from "@/shared/lib/cn"
 import { useTheme } from "next-themes"
 import { useMounted } from "@/shared/hooks/useMounted"
