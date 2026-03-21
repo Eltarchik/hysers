@@ -39,7 +39,7 @@ export const Header = () => {
         },
     })
 
-    return <header className="grid grid-cols-3 xl:grid-cols-[4fr_9fr_4fr] gap-10 h-12 max-w-440 w-full">
+    return <header className="sticky top-0 z-100 grid grid-cols-3 xl:grid-cols-[4fr_9fr_4fr] gap-10 py-5 h-22 max-w-440 w-full bg-space">
         <div className="flex items-center gap-5">
             <Button className="px-0 size-12">
                 <Menu />
@@ -62,7 +62,7 @@ export const Header = () => {
             <div className={cn("flex justify-end flex-1 opacity-0 transition-opacity duration-80 ease-in", !userIsPending && "opacity-100")}>
                 { user
                     ? <UserMetaCard user={user} />
-                    : <SIgnInButton/>
+                    : <SIgnInButton />
                 }
             </div>
         </div>

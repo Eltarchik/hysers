@@ -33,7 +33,7 @@ export default async function RootLayout(
             className={cn(
                 geistSans.variable,
                 geistMono.variable,
-                "antialiased flex flex-col gap-10 items-center bg-space p-5 h-dvh"
+                "antialiased flex flex-col gap-5 items-center bg-space px-5 pb-5 min-h-dvh"
             )}
         >
             <NextIntlClientProvider>
