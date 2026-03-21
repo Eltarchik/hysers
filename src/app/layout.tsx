@@ -7,6 +7,7 @@ import { ReactNode } from "react"
 import { ClientProvider } from "@/app/ClientProvider"
 import { NextIntlClientProvider } from "next-intl"
 import { ChildrenProp } from "@/shared/ui/propsPresets"
+import { ThemeProvider } from "next-themes"
 
 const geistSans = Geist({
     variable: "--font-geist-sans",
@@ -28,7 +29,7 @@ type Props = ChildrenProp
 export default async function RootLayout(
     { children, }: Props
 ) {
-    return <html>
+    return <html suppressHydrationWarning>
         <body
             className={cn(
                 geistSans.variable,

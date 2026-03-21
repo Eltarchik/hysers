@@ -2,10 +2,8 @@ export const LIGHT_THEME = "light"
 
 let timeout: NodeJS.Timeout | null = null
 
-export const toggleTheme = () => {
+export const enableThemeTogglingAnimation = () => {
     document.documentElement.classList.add("theme-transition")
-    document.documentElement.classList.toggle(LIGHT_THEME)
-
     if (timeout) clearTimeout(timeout)
 
     timeout = setTimeout(() => {
