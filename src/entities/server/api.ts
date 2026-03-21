@@ -2,8 +2,8 @@ import { Server, serverSchema } from "@/entities/server/types"
 import { TagFilters } from "@/entities/filters/config/tags"
 import { RegionFilters } from "@/entities/filters/config/regions"
 import { axiosAuthorized } from "@/shared/api/interceptors"
-import { z } from "zod"
 import { createApiResponseSchema } from "@/shared/api/responseSchemas"
+import { z } from "zod"
 
 const mockServers: Server[] = [
     {
@@ -133,6 +133,15 @@ class ServerAPI {
         } // todo remove
 
         return r // todo change to parsed.data
+    }
+
+    private quantitySchema = createApiResponseSchema(z.number().min(0))
+    quantity = async () => {
+        const resp = await axiosAuthorized.get(`${this.BASE_URL}/quantity`)
+        const parsed = this.quantitySchema.safeParse(resp.data)
+        if (!parsed.success) throw parsed.error
+
+        return parsed.data
     }
 
     private respLikeSchema = createApiResponseSchema(z.undefined())

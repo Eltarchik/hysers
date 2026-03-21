@@ -13,12 +13,21 @@ import { SIgnInButton } from "@/entities/auth/SIgnInButton"
 import { UserMetaCard } from "@/entities/user/UserMetaCard"
 import { useQuery } from "@tanstack/react-query"
 import { userAPI } from "@/entities/user/api"
+import { serverAPI } from "@/entities/server/api"
 
 export const Header = () => {
-    const { data: user, isPending } = useQuery({
+    const { data: user, isPending: userIsPending } = useQuery({
         queryKey: ["user", "meta"],
         queryFn: async () => {
             const data = await userAPI.meta()
+            if (data.status === "success") return data.data
+        },
+    })
+
+    const { data: serversQuantity } = useQuery({
+        queryKey: ["servers", "quantity"],
+        queryFn: async () => {
+            const data = await serverAPI.quantity()
             if (data.status === "success") return data.data
         },
     })
@@ -31,7 +40,9 @@ export const Header = () => {
             <Link href={Routes.HOME}>
                 <Heading size="lg">HyGames</Heading>
             </Link>
-            <SmallChip colors={"accent"} className="hidden 2xl:flex">52 servers</SmallChip>
+            <SmallChip colors={"accent"} className="hidden 2xl:flex">
+                { serversQuantity ?? "..." } servers
+            </SmallChip>
         </div>
 
         <Input type="search" placeholder="Find server">
@@ -41,7 +52,7 @@ export const Header = () => {
         <div className="flex gap-5">
             <ChangeThemeButton />
             <ChangeLocaleButton />
-            { !isPending && (user
+            { !userIsPending && (user
                 ? <UserMetaCard user={user} className="ml-auto" />
                 : <SIgnInButton/>
             )}
