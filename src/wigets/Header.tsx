@@ -14,7 +14,7 @@ import { UserMetaCard } from "@/entities/user/UserMetaCard"
 import { useQuery } from "@tanstack/react-query"
 import { userAPI } from "@/entities/user/api"
 import { serverAPI } from "@/entities/server/api"
-import { errorHandler } from "@/shared/api/responseSchemas"
+import { errorHandler, isApiError } from "@/shared/api/responseSchemas"
 import { cn } from "@/shared/lib/cn"
 import { useTranslations } from "next-intl"
 
@@ -27,8 +27,10 @@ export const Header = () => {
             if (data.status === "success") return data.data
         },
         retry: (failureCount, error: any) => {
-            const err = errorHandler(error)
-            if (err?.status === "error" && (err.code === 401 || err.message === "Unauthorized")) return false
+            if (isApiError(error)
+                && error?.status === "error"
+                && (error.code === 401 || error.message === "Unauthorized")
+            ) return false
             return failureCount < 3
         },
     })
