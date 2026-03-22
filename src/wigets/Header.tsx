@@ -68,7 +68,7 @@ export const Header = () => {
             <div className={cn("flex justify-end flex-1 opacity-0 transition-opacity duration-80 ease-in", !userIsPending && "opacity-100")}>
                 { !user
                     ? <SIgnInButton />
-                    : <div className="relative w-full">
+                    : <div className="relative">
                         <UserMetaCard user={ user } />
                     </div>
                 }
