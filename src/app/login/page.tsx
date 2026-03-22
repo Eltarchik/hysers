@@ -39,6 +39,7 @@ export default function Login() {
             return await authAPI.login(formData)
         },
         onError: async (error) => {
+            console.log(error)
             if (!isApiError(error)) return
             if (error.status === "validation_error") setFormError(Object.values(error.errors)[0][0])
             else setFormError(error.message)
