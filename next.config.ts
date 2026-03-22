@@ -6,8 +6,12 @@ const nextConfig: NextConfig = {
       remotePatterns: [
           {
               protocol: "https",
-              hostname: "media.discordapp.net",
-          }
+              hostname: "zupimages.net",
+          }, // todo remove
+          {
+              protocol: "https",
+              hostname: "d1elhbmy4ij4xv.cloudfront.net",
+          }, // todo remove
       ]
   }
 }

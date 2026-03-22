@@ -1,13 +1,13 @@
 import { Filter, Filters } from "@/entities/filters/types"
 
 export enum TagFilters {
-    PVP = "pvp",
-    PVE = "pve",
-    VANILLA = "vanilla",
-    SURVIVAL = "survival",
-    RP = "rp",
-    RPG = "rpg",
-    MINI_GAMES = "mini_games"
+    PVP = "PVP",
+    PVE = "PVE",
+    VANILLA = "VANILLA",
+    SURVIVAL = "SURVIVAL",
+    RP = "RP",
+    RPG = "RPG",
+    MINIGAMES = "MINIGAMES"
 }
 
 export const tagFilters: Filter = {
@@ -19,6 +19,6 @@ export const tagFilters: Filter = {
         { name: TagFilters.SURVIVAL },
         { name: TagFilters.RP },
         { name: TagFilters.RPG },
-        { name: TagFilters.MINI_GAMES },
+        { name: TagFilters.MINIGAMES },
     ]
 }

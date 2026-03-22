@@ -46,22 +46,22 @@
     "Filters": {
       "tags": {
         "title": "Tags",
-        "pvp": "PVP",
-        "pve": "PVE",
-        "vanilla": "vanilla",
-        "survival": "survival",
-        "rp": "RP",
-        "rpg": "RPG",
-        "mini_games": "mini-games"
+        "PVP": "PVP",
+        "PVE": "PVE",
+        "VANILLA": "vanilla",
+        "SURVIVAL": "survival",
+        "RP": "RP",
+        "RPG": "RPG",
+        "MINIGAMES": "mini-games"
       },
       "regions": {
         "title": "Regions",
-        "cis": "CIS",
-        "europe": "europe",
-        "asian": "asian",
-        "africa": "africa",
-        "north_america": "north america",
-        "south_america": "south america"
+        "CIS": "CIS",
+        "EUROPE": "europe",
+        "AFRICA": "africa",
+        "ASIAN": "asia",
+        "SOUTHAMERICA": "south america",
+        "NORTHAMERICA": "north america"
       },
       "sort": {
         "title": "Sort",

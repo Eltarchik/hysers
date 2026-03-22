@@ -1,12 +1,12 @@
 import { Filter, Filters } from "@/entities/filters/types"
 
 export enum RegionFilters {
-    CIS = "cis",
-    EUROPE = "europe",
-    AFRICA = "africa",
-    ASIAN = "asian",
-    SOUTH_AMERICA = "south_america",
-    NORTH_AMERICA = "north_america",
+    CIS = "CIS",
+    EUROPE = "EUROPE",
+    AFRICA = "AFRICA",
+    ASIAN = "ASIAN",
+    SOUTH_AMERICA = "SOUTHAMERICA",
+    NORTH_AMERICA = "NORTHAMERICA",
 }
 
 export const regionFilters: Filter = {
