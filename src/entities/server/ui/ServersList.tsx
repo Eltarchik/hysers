@@ -29,8 +29,8 @@ export const ServersList = () => {
 
             const previousServers = queryClient.getQueryData<Server[]>(serversKey)
 
-            queryClient.setQueryData<Server[] | undefined>(serversKey, old =>
-                old?.map(server =>
+            queryClient.setQueryData<Server[] | undefined>(serversKey, prev =>
+                prev?.map(server =>
                     server.id !== id
                         ? server
                         : {

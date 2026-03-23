@@ -7,13 +7,12 @@ import { cn } from "@/shared/lib/cn"
 export interface PopupListItem<T> {
     title: string
     value: T
-    icon: LucideIcon
-
+    icon?: LucideIcon
 }
 
 type Props<T> = {
     items: PopupListItem<T>[]
-    renderItem: (item: T) => ReactNode
+    renderItem: (item: PopupListItem<T>) => ReactNode
 } & ClassProp
 
 export const PopupList = <T,>({
@@ -22,6 +21,6 @@ export const PopupList = <T,>({
     className,
 }: Props<T>) => {
     return <div className={cn("flex flex-col p-2 w-full rounded-2xl bg-island", className)}>
-
+        { items.map(item => renderItem(item))}
     </div>
 }

@@ -14,14 +14,18 @@ import { UserMetaCard } from "@/entities/user/UserMetaCard"
 import { useQuery } from "@tanstack/react-query"
 import { userAPI } from "@/entities/user/api"
 import { serverAPI } from "@/entities/server/api"
-import { errorHandler, isApiError } from "@/shared/api/responseSchemas"
+import { isApiError } from "@/shared/api/responseSchemas"
 import { cn } from "@/shared/lib/cn"
 import { useTranslations } from "next-intl"
+import { UserPopupMenu } from "@/wigets/UserPopupMenu"
+import { userMetaKey } from "@/entities/user/queryKeys"
+import { useState } from "react"
+import { useOverlay } from "@/shared/hooks/useOverlay"
 
 export const Header = () => {
     const t = useTranslations("Shared.Header")
     const { data: user, isPending: userIsPending } = useQuery({
-        queryKey: ["user", "meta"],
+        queryKey: userMetaKey,
         queryFn: async () => {
             const data = await userAPI.meta()
             if (data.status === "success") return data.data
@@ -32,7 +36,7 @@ export const Header = () => {
                 && (error.code === 401 || error.message === "Unauthorized")
             ) return false
             return failureCount < 3
-        },
+        }
     })
 
     const { data: serversQuantity } = useQuery({
@@ -42,6 +46,8 @@ export const Header = () => {
             if (data.status === "success") return data.data
         },
     })
+
+    const [ userMenuOpened, setUserMenuOpened, userMetaCardRef ] = useOverlay<HTMLDivElement>()
 
     return <header className="sticky top-0 z-100 grid grid-cols-3 xl:grid-cols-[4fr_9fr_4fr] gap-10 py-5 h-22 max-w-440 w-full bg-space">
         <div className="flex items-center gap-5">
@@ -68,8 +74,13 @@ export const Header = () => {
             <div className={cn("flex justify-end flex-1 opacity-0 transition-opacity duration-80 ease-in", !userIsPending && "opacity-100")}>
                 { !user
                     ? <SIgnInButton />
-                    : <div className="relative">
-                        <UserMetaCard user={ user } />
+                    : <div className="relative" ref={userMetaCardRef}>
+                        <UserMetaCard user={ user }
+                                      onClick={() => setUserMenuOpened(prev => !prev)}
+                        />
+                        { userMenuOpened &&
+                            <UserPopupMenu className="absolute top-full translate-y-2 right-0 w-fit"/>
+                        }
                     </div>
                 }
             </div>
