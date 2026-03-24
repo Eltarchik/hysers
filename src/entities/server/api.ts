@@ -24,6 +24,8 @@ interface ServersDTO {
     order?: OrderDto
 }
 
+export const SERVERS_IN_PAGE = 24
+
 class ServerAPI {
     private BASE_URL = "/server"
 
@@ -68,7 +70,7 @@ class ServerAPI {
     private statusesSchema = createApiResponseSchema(serverStatusSchema.array())
     statuses = async (ids: number[]) => {
         const resp = await axiosAuthorized.get(`${this.BASE_URL}/statuses`, {
-            params: { ids }
+            params: { ids: ids.join(",") }
         })
         const parsed = this.statusesSchema.safeParse(resp.data)
         if (!parsed.success) throw parsed.error

@@ -1,8 +1,8 @@
 import { ServerCard } from "@/entities/server/ui/ServerCard"
-import { serverAPI } from "@/entities/server/api"
+import { serverAPI, SERVERS_IN_PAGE } from "@/entities/server/api"
 import { LikeServerChip } from "@/entities/server/ui/LikeServerChip"
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
-import { useServersKey } from "@/entities/server/ui/queryKeys"
+import { useServersKey, useServerStatusesKey } from "@/entities/server/ui/queryKeys"
 import { Server } from "@/entities/server/types"
 import { MouseEvent } from "react"
 import { ServerCardSkeleton } from "@/entities/server/ui/ServerCardSkeleton"
@@ -11,14 +11,40 @@ import { ChipSkeleton } from "@/shared/ui/ChipSkeleton"
 export const ServersList = () => {
     const queryClient = useQueryClient()
     const serversKey = useServersKey()
+    const serverStatusesKey = useServerStatusesKey()
 
-    const { data: servers, isPending } = useQuery({
+    const { data: serversWithoutStatus, isPending: serversIsPending } = useQuery({
         queryKey: serversKey,
         queryFn: async () => {
-            const resp = await serverAPI.servers({ page: 0, quantity: 30 })
+            const resp = await serverAPI.servers({
+                page: 0,
+                quantity: SERVERS_IN_PAGE
+            })
             if (resp.status === "success") return resp.data
         },
     })
+
+    const { data: serverStatuses, isPending: serverStatusesIsPending } = useQuery({
+        queryKey: serverStatusesKey,
+        enabled: (serversWithoutStatus?.length ?? 0) > 0,
+        queryFn: async () => {
+            const resp = await serverAPI
+                .statuses(serversWithoutStatus?.map(server => server.id) ?? [])
+            if (resp.status === "success") return resp.data
+        },
+    })
+
+    const idsToStatuses = (serverStatuses?.length ?? 0) <= 0
+        ? undefined
+        : Object.fromEntries(serverStatuses!
+            .map(entry => [entry.id, entry.isOnline]))
+
+    const servers = !idsToStatuses
+        ? serversWithoutStatus
+        : serversWithoutStatus?.map(server => ({
+            ...server,
+            isOnline: idsToStatuses[server.id] ?? server.isOnline
+        }))
 
     const { mutate: toggleLike } = useMutation({
         mutationFn: async (id: number) => {
@@ -55,7 +81,7 @@ export const ServersList = () => {
         toggleLike(id)
     }
 
-    if (isPending || !servers) return <div className="grid grid-cols-[repeat(auto-fit,minmax(240px,1fr))] gap-5 w-full">
+    if (serversIsPending || !servers) return <div className="grid grid-cols-[repeat(auto-fit,minmax(240px,1fr))] gap-5 w-full">
         <ServerCardSkeleton count={20}>
             <ChipSkeleton className="absolute right-5 -top-5 w-18" />
         </ServerCardSkeleton>
