@@ -1,4 +1,4 @@
-import { serverSchema } from "@/entities/server/types"
+import { serverSchema, serverStatusSchema } from "@/entities/server/types"
 import { TagFilters } from "@/entities/filters/config/tags"
 import { RegionFilters } from "@/entities/filters/config/regions"
 import { axiosAuthorized } from "@/shared/api/interceptors"
@@ -36,10 +36,41 @@ class ServerAPI {
         return parsed.data
     }
 
+    private serverSchema = createApiResponseSchema(serverSchema)
+    server = async (nameId: string) => {
+        const resp = await axiosAuthorized.get(`${this.BASE_URL}/server/${nameId}`)
+        const parsed = this.serverSchema.safeParse(resp.data)
+        if (!parsed.success) throw parsed.error
+
+        return parsed.data
+    }
+
     private quantitySchema = createApiResponseSchema(z.number().min(0))
     quantity = async () => {
         const resp = await axiosAuthorized.get(`${this.BASE_URL}/quantity`)
         const parsed = this.quantitySchema.safeParse(resp.data)
+        if (!parsed.success) throw parsed.error
+
+        return parsed.data
+    }
+
+    private statusSchema = createApiResponseSchema(serverStatusSchema)
+    status = async (id: number) => {
+        const resp = await axiosAuthorized.get(`${this.BASE_URL}/status`, {
+            params: { id }
+        })
+        const parsed = this.statusSchema.safeParse(resp.data)
+        if (!parsed.success) throw parsed.error
+
+        return parsed.data
+    }
+
+    private statusesSchema = createApiResponseSchema(serverStatusSchema.array())
+    statuses = async (ids: number[]) => {
+        const resp = await axiosAuthorized.get(`${this.BASE_URL}/statuses`, {
+            params: { ids }
+        })
+        const parsed = this.statusesSchema.safeParse(resp.data)
         if (!parsed.success) throw parsed.error
 
         return parsed.data

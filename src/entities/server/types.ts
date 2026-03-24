@@ -15,7 +15,13 @@ export const serverSchema = z.object({
     isOnline: z.boolean().nullish(),
     players: z.number().min(0).nullish(),
     tags: z.enum(TagFilters).array(),
-    region: z.enum(RegionFilters),
+    region: z.enum(RegionFilters).nullish(),
 })
 
 export type Server = z.infer<typeof serverSchema>
+
+
+export const serverStatusSchema = z.object({
+    id: z.number(),
+    isOnline: z.boolean().nullish(),
+})
