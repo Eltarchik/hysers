@@ -1,6 +1,6 @@
 'use client'
 
-import { useRef, useState } from "react"
+import { ChangeEventHandler, InputEventHandler, useRef, useState } from "react"
 import { repeat } from "@/shared/lib/iterators"
 import { Text } from "@/shared/ui/Text"
 import { cn } from "@/shared/lib/cn"
@@ -8,14 +8,19 @@ import { cn } from "@/shared/lib/cn"
 
 interface Props {
     error?: boolean
+    onChange?: (code: string) => void
     onCodeEntered: (code: string) => void
 }
 
-export const VerificationCodeInput = (
-    { error = false, onCodeEntered }: Props
-) => {
+export const VerificationCodeInput = ({
+    error = false,
+    onChange,
+    onCodeEntered
+}: Props) => {
+
     const [ codeValue, setCodeValue ] = useState("")
     const [ overtimeCodeValue, setOvertimeCodeValue ] = useState("")
+    const [ focused, setFocused ] = useState(false)
 
     const overtimeTimeoutRef = useRef<NodeJS.Timeout | null>(null)
 
@@ -34,24 +39,29 @@ export const VerificationCodeInput = (
         overtimeTimeoutRef.current = null
     }
 
+    const onInputChange: ChangeEventHandler<HTMLInputElement> = (e) => {
+        setCodeValue(prev => {
+            const next = e.target.value
+                .replace(/\D/g, "")
+                .slice(0, 6)
+
+            updateOvertimeCodeValue(prev, next)
+            if (next !== prev) onChange?.(next)
+            if (next.length === 6 && next !== prev) onCodeEntered(next)
+            return next
+        })
+    }
+
     return <label className="flex gap-2 px-5 h-15 rounded-2xl bg-glade cursor-text">
         <input className="size-0 opacity-0"
                value={codeValue}
-               onChange={e => {
-                   setCodeValue(prev => {
-                       const next = e.target.value
-                           .replace(/\D/g, "")
-                           .slice(0, 6)
-
-                       updateOvertimeCodeValue(prev, next)
-                       if (next.length === 6 && next !== prev) onCodeEntered(next)
-                       return next
-                   })
-               }}
+               onChange={onInputChange}
                onKeyDown={e => {
                    if (e.key === "ArrowLeft" || e.key === "ArrowRight") e.preventDefault()
                }}
                name="code"
+               onFocus={() => setFocused(true)}
+               onBlur={() => setFocused(false)}
         />
         { repeat(6).map(i =>
             <div key={i} className="flex flex-col items-center w-5 h-full overflow-hidden">
@@ -63,8 +73,9 @@ export const VerificationCodeInput = (
                 >
                     <div className={cn(
                             "size-2 rounded-full bg-element-dis",
-                            "transition-opacity duration-200 ease-in",
+                            "transition-[opacity,background-color] duration-200 ease-in",
                             codeValue[i] && "opacity-0",
+                            codeValue.length >= i && focused && "animate-[cursor-blink-bg_1s_infinite]"
                          )}
                     />
                 </div>

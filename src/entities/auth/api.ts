@@ -2,32 +2,31 @@ import { axiosCommon } from "@/shared/api/interceptors"
 import { AccessToken } from "@/shared/service/accessToken"
 import { z } from "zod"
 import { createApiResponseSchema } from "@/shared/api/responseSchemas"
-
-interface RegisterDTO {
-    name: string
-    email: string
-    password: string
-}
-
-const authRequestSchema = createApiResponseSchema(
-    z.object({
-        accessToken: z.string(),
-    })
-)
-
-type AuthRequest = z.infer<typeof authRequestSchema>
-
-interface LoginDTO {
-    email: string
-    password: string
-}
+import { LoginDTO, RegisterDTO } from "@/entities/auth/types"
 
 class AuthAPI {
     private BASE_URL = "/auth"
 
-    register = async (data: RegisterDTO) => {
-        const resp = await axiosCommon.post(`${ this.BASE_URL }/register`, data)
-        const parsed = authRequestSchema.safeParse(resp.data)
+    private authSchema = createApiResponseSchema(
+        z.object({
+            accessToken: z.string(),
+        })
+    )
+
+    private initRegisterSchema = createApiResponseSchema(z.undefined())
+    initRegister = async (data: RegisterDTO) => {
+        const resp = await axiosCommon.post(`${ this.BASE_URL }/init-register`, data)
+        const parsed = this.initRegisterSchema.safeParse(resp.data)
+        if (!parsed.success) throw parsed.error
+
+        return parsed.data
+    }
+
+    register = async (code: string) => {
+        const resp = await axiosCommon.post(`${ this.BASE_URL }/register`, undefined, {
+            params: { code }
+        })
+        const parsed = this.authSchema.safeParse(resp.data)
         if (!parsed.success) throw parsed.error
 
         if (parsed.data.status === "success") AccessToken.save(parsed.data.data.accessToken)
@@ -37,7 +36,7 @@ class AuthAPI {
 
     login = async (data: LoginDTO) => {
         const resp = await axiosCommon.post(`${ this.BASE_URL }/login`, data)
-        const parsed = authRequestSchema.safeParse(resp.data)
+        const parsed = this.authSchema.safeParse(resp.data)
         if (!parsed.success) throw parsed.error
 
         if (parsed.data.status === "success") AccessToken.save(parsed.data.data.accessToken)
@@ -52,7 +51,7 @@ class AuthAPI {
 
     refresh = async () => {
         const resp = await axiosCommon.post(`${ this.BASE_URL }/refresh`)
-        const parsed = authRequestSchema.safeParse(resp.data)
+        const parsed = this.authSchema.safeParse(resp.data)
         if (!parsed.success) throw parsed.error
 
         if (parsed.data.status === "success") AccessToken.save(parsed.data.data.accessToken)

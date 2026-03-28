@@ -49,11 +49,6 @@ body {
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-  }
-}
-
 html.light {
   --space: #F4F4F4;
   --island: #FFFFFF;
@@ -89,6 +84,15 @@ html.light {
 body {
   color: var(--element);
   font-family: "Google Sans", Helvetica, sans-serif;
+}
+
+@keyframes cursor-blink-bg {
+  0%, 100% {
+    background-color: var(--element-dis);
+  }
+  50% {
+    background-color: var(--element-imp);
+  }
 }
 
 input, button, a {

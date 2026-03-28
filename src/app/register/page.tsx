@@ -5,9 +5,9 @@ import { Text } from "@/shared/ui/Text"
 import { Routes } from "@/shared/config/routes"
 import { PasswordInput } from "@/entities/auth/PasswordInput"
 import { z } from "zod"
-import { ChangeEvent, useCallback, useEffect, useMemo, useRef } from "react"
+import { ChangeEvent, useCallback, useEffect, useMemo, useRef, useState } from "react"
 import { useMutation } from "@tanstack/react-query"
-import { authAPI } from "@/shared/api/auth"
+import { authAPI } from "@/entities/auth/api"
 import { cn } from "@/shared/lib/cn"
 import { useOvertimeValue } from "@/shared/hooks/useOvertimeValue"
 import { useRouter } from "next/navigation"
@@ -36,9 +36,9 @@ export default function Register() {
 
     const router = useRouter()
 
-    const { mutate, isPending } = useMutation({
+    const { mutate: sendForm, isPending: formSending } = useMutation({
         mutationFn: async () => {
-            return await authAPI.register(formData)
+            return await authAPI.initRegister(formData)
         },
         onError: async (error) => {
             if (!isApiError(error)) return
@@ -46,9 +46,10 @@ export default function Register() {
             else setFormError(error.message)
         },
         onSuccess: async () => {
-            router.push(Routes.HOME)
+            router.push(Routes.REGISTER_CODE)
         }
     })
+
 
     const initialFormData: FormData = {
         name: "",
@@ -68,7 +69,7 @@ export default function Register() {
         setFormError,
 
     } = useForm(formDataShema, initialFormData, () => {
-        mutate()
+        sendForm()
     })
     const formOvertimeError = useOvertimeValue(formError)
 
@@ -125,7 +126,7 @@ export default function Register() {
                         disabled={!isValid}
                 >
                     <Text className="text-accent-element group-disabled:text-element-dis">
-                        { isPending ? t("loading") : t("submit") }
+                        { formSending ? t("loading") : t("submit") }
                     </Text>
                 </Button>
                 <Text small className={cn(

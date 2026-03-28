@@ -1,8 +1,8 @@
 import axios, { CreateAxiosDefaults } from "axios"
 import { AccessToken } from "@/shared/service/accessToken"
 import { errorMessage } from "@/shared/service/errors"
-import { authAPI } from "@/shared/api/auth"
-import { badResponseSchema, errorHandler } from "@/shared/api/responseSchemas"
+import { authAPI } from "@/entities/auth/api"
+import { errorHandler } from "@/shared/api/responseSchemas"
 
 const options: CreateAxiosDefaults = {
     baseURL: process.env.NEXT_PUBLIC_API_URL,
