@@ -1,12 +1,12 @@
 import { useSelector } from "react-redux"
 import { RootState } from "@/shared/config/store"
+import { Filters } from "@/entities/filters/types"
 
-export const useServersKey = () => {
-    const filters = useSelector((state: RootState)=> state.filters.selected)
-    return ["servers", filters]
+export const getServersKey = (filters: Record<Filters, string[]>, page: number) => {
+    return ["servers", filters.regions, filters.tags, page]
 }
 
-export const useServerStatusesKey = () => {
-    const serversKey = useServersKey()
+export const useServerStatusesKey = (filters: Record<Filters, string[]>, page: number) => {
+    const serversKey = getServersKey(filters, page)
     return [...serversKey, "statuses"]
 }

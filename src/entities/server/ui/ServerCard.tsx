@@ -19,7 +19,7 @@ export const ServerCard = (
     const href = Routes.SERVER(server.nameId)
     const router = useRouter()
 
-    return <div className="flex flex-col overflow-hidden rounded-2xl bg-island cursor-pointer"
+    return <div className="flex flex-col overflow-hidden h-fit rounded-2xl bg-island cursor-pointer"
                 onClick={() => router.push(href)}
     >
         <div className="relative w-full h-40 bg-glade">

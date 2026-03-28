@@ -6,7 +6,7 @@ import { Text } from "@/shared/ui/Text"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { authAPI } from "@/shared/api/auth"
 import { userMetaKey } from "@/entities/user/queryKeys"
-import { useServersKey } from "@/entities/server/ui/queryKeys"
+import { getServersKey } from "@/entities/server/ui/queryKeys"
 import { Server } from "@/entities/server/types"
 
 
@@ -17,7 +17,7 @@ export const UserPopupMenu = (
 ) => {
     const items = userMenuConfig // todo integrate localization
 
-    const serversKey = useServersKey()
+    const serversKey = getServersKey()
     const queryClient = useQueryClient()
 
     const { mutate: logout } = useMutation({

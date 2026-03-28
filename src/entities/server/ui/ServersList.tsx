@@ -2,23 +2,34 @@ import { ServerCard } from "@/entities/server/ui/ServerCard"
 import { serverAPI, SERVERS_IN_PAGE } from "@/entities/server/api"
 import { LikeServerChip } from "@/entities/server/ui/LikeServerChip"
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
-import { useServersKey, useServerStatusesKey } from "@/entities/server/ui/queryKeys"
+import { getServersKey, useServerStatusesKey } from "@/entities/server/ui/queryKeys"
 import { Server } from "@/entities/server/types"
 import { MouseEvent } from "react"
 import { ServerCardSkeleton } from "@/entities/server/ui/ServerCardSkeleton"
 import { ChipSkeleton } from "@/shared/ui/ChipSkeleton"
+import { RootState } from "@/shared/config/store"
+import { useSelector } from "react-redux"
+import { RegionFilters } from "@/entities/filters/config/regions"
+import { TagFilters } from "@/entities/filters/config/tags"
 
 export const ServersList = () => {
     const queryClient = useQueryClient()
-    const serversKey = useServersKey()
-    const serverStatusesKey = useServerStatusesKey()
+    const page = 0 // todo remove
+    const filters = useSelector((state: RootState)=> state.filters.selected)
+
+    const serversKey = getServersKey(filters, page)
+    const serverStatusesKey = useServerStatusesKey(filters, page)
 
     const { data: serversWithoutStatus, isPending: serversIsPending } = useQuery({
         queryKey: serversKey,
         queryFn: async () => {
             const resp = await serverAPI.servers({
-                page: 0,
-                quantity: SERVERS_IN_PAGE
+                page: page,
+                quantity: SERVERS_IN_PAGE,
+                filters: {
+                    region: filters.regions[0] as RegionFilters,
+                    tags: filters.tags.length > 0 ? (filters.tags as TagFilters[]) : undefined,
+                }
             })
             if (resp.status === "success") return resp.data
         },
@@ -87,7 +98,7 @@ export const ServersList = () => {
         </ServerCardSkeleton>
     </div>
 
-    return <div className="grid grid-cols-[repeat(auto-fit,minmax(240px,1fr))] gap-5 w-full">
+    return <div className="grid grid-cols-[repeat(auto-fill,minmax(240px,1fr))] gap-5 w-full">
         { servers?.map(server =>
             <ServerCard server={server} key={server.id}>
                 <LikeServerChip className="absolute right-5 -top-5 transition-transform duration-400 ease-out hover:scale-108"
