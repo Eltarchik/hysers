@@ -40,8 +40,9 @@ class ServerAPI {
 
     private serverSchema = createApiResponseSchema(serverSchema)
     server = async (nameId: string) => {
-        const resp = await axiosAuthorized.get(`${this.BASE_URL}/server/${nameId}`)
+        const resp = await axiosAuthorized.get(`${this.BASE_URL}/id/${nameId}`)
         const parsed = this.serverSchema.safeParse(resp.data)
+
         if (!parsed.success) throw parsed.error
 
         return parsed.data
