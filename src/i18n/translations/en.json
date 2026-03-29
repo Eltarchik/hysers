@@ -38,8 +38,10 @@
       "validation": {
         "nameMin": "The name must contain at least 3 characters",
         "invalidEmail": "Invalid email",
-        "passwordMin": "The password must contain at least 6 characters"
-      }
+        "passwordMin": "The password must contain at least 6 characters",
+        "invalidCode": "Invalid code"
+      },
+      "resendCode": "Send code again"
     }
   },
   "Entities": {

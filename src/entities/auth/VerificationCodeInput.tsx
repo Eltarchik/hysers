@@ -40,14 +40,17 @@ export const VerificationCodeInput = ({
     }
 
     const onInputChange: ChangeEventHandler<HTMLInputElement> = (e) => {
-        setCodeValue(prev => {
-            const next = e.target.value
-                .replace(/\D/g, "")
-                .slice(0, 6)
+        const next = e.target.value
+            .replace(/\D/g, "")
+            .slice(0, 6)
 
+        if (next !== codeValue) {
+            onChange?.(next)
+            if (next.length === 6) onCodeEntered(next)
+        }
+
+        setCodeValue(prev => {
             updateOvertimeCodeValue(prev, next)
-            if (next !== prev) onChange?.(next)
-            if (next.length === 6 && next !== prev) onCodeEntered(next)
             return next
         })
     }

@@ -2,7 +2,7 @@ import { ServerCard } from "@/entities/server/ui/ServerCard"
 import { serverAPI, SERVERS_IN_PAGE } from "@/entities/server/api"
 import { LikeServerChip } from "@/entities/server/ui/LikeServerChip"
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
-import { getServersKey, useServerStatusesKey } from "@/entities/server/ui/queryKeys"
+import { getServersKey, getServerStatusesKey } from "@/entities/server/queryKeys"
 import { Server } from "@/entities/server/types"
 import { MouseEvent } from "react"
 import { ServerCardSkeleton } from "@/entities/server/ui/ServerCardSkeleton"
@@ -18,7 +18,7 @@ export const ServersList = () => {
     const filters = useSelector((state: RootState)=> state.filters.selected)
 
     const serversKey = getServersKey(filters, page)
-    const serverStatusesKey = useServerStatusesKey(filters, page)
+    const serverStatusesKey = getServerStatusesKey(filters, page)
 
     const { data: serversWithoutStatus, isPending: serversIsPending } = useQuery({
         queryKey: serversKey,

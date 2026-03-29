@@ -34,6 +34,14 @@ class AuthAPI {
         return parsed.data
     }
 
+    resendCode = async () => {
+        const resp = await axiosCommon.post(`${ this.BASE_URL }/resend-email`)
+        const parsed = this.initRegisterSchema.safeParse(resp.data)
+        if (!parsed.success) throw parsed.error
+
+        return parsed.data
+    }
+
     login = async (data: LoginDTO) => {
         const resp = await axiosCommon.post(`${ this.BASE_URL }/login`, data)
         const parsed = this.authSchema.safeParse(resp.data)
