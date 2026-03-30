@@ -10,6 +10,7 @@ import { Metadata } from "next"
 import { ServerTagsAndRegionCard } from "@/entities/server/ui/serverPageCards/ServerTagsAndRegionCard"
 import { ServerOwnerCard } from "@/entities/server/ui/serverPageCards/ServerOwnerCard"
 import { User } from "@/entities/user/types"
+import { ServerContactsCard } from "@/entities/server/ui/serverPageCards/ServerContactsCard"
 
 
 interface Params {
@@ -36,12 +37,7 @@ export default async function Server({
         return <div className="grid grid-cols-1 xl:grid-cols-[4fr_9fr_4fr] gap-10 max-w-440 w-full">
             <div className="flex flex-col gap-5">
                 <ServerOwnerCard user={mockUser} ownerNotConfirmed={true} />
-                <div className="flex w-full h-40 rounded-2xl bg-island">
-                    todo: contacts
-                </div>
-                <div className="flex w-full h-40 rounded-2xl bg-island">
-                    todo: ads
-                </div>
+                <ServerContactsCard />
             </div>
             <div className="flex flex-col gap-5">
                 { server.poster &&
