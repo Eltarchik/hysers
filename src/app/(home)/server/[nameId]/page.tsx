@@ -11,6 +11,8 @@ import { ServerTagsAndRegionCard } from "@/entities/server/ui/serverPageCards/Se
 import { ServerOwnerCard } from "@/entities/server/ui/serverPageCards/ServerOwnerCard"
 import { User } from "@/entities/user/types"
 import { ServerContactsCard } from "@/entities/server/ui/serverPageCards/ServerContactsCard"
+import { ServerStateBlock } from "@/wigets/ServerStateBlock"
+import { ServerTeamBlock } from "@/wigets/ServerTeamBlock"
 
 
 interface Params {
@@ -34,12 +36,9 @@ export default async function Server({
 
         if (!server) notFound()
 
-        return <div className="grid grid-cols-1 xl:grid-cols-[4fr_9fr_4fr] gap-10 max-w-440 w-full">
-            <div className="flex flex-col gap-5">
-                <ServerOwnerCard user={mockUser} ownerNotConfirmed={true} />
-                <ServerContactsCard />
-            </div>
-            <div className="flex flex-col gap-5">
+        return <div className="grid grid-cols-2 xl:grid-cols-[4fr_9fr_4fr] gap-y-10 gap-x-5 xl:gap-x-10 max-w-440 w-full">
+            <ServerTeamBlock user={mockUser} className="hidden xl:flex" />
+            <div className="flex flex-col gap-5 col-span-2 xl:col-span-1">
                 { server.poster &&
                     <Image className="flex w-full h-60 object-cover rounded-2xl bg-glade"
                            src={ server.poster }
@@ -55,20 +54,8 @@ export default async function Server({
                     { server.description }
                 </Text>
             </div>
-            <div className="flex flex-col gap-5">
-                <ServerInfoCard id={server.id}
-                                nameId={server.name}
-                                domain={server.domain}
-                                ip={server.ip}
-                                players={server.players}
-                />
-                <ServerRatingCard number={666} />
-                { server.tags.length &&
-                    <ServerRatingCard number={1} tag={server.tags[0]}/>
-                    // todo integrate real rating
-                }
-                <ServerTagsAndRegionCard tags={server.tags} region={server.region ?? undefined} />
-            </div>
+            <ServerTeamBlock user={mockUser} className="xl:hidden" />
+            <ServerStateBlock server={server} />
         </div>
 
     } catch (e) {
