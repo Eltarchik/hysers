@@ -7,6 +7,7 @@ import Image from "next/image"
 import { ServerInfoCard } from "@/entities/server/ui/serverPageCards/ServerInfoCard"
 import { ServerRatingCard } from "@/entities/server/ui/serverPageCards/ServerRatingCard"
 import { Metadata } from "next"
+import { ServerTagsAndRegionCard } from "@/entities/server/ui/serverPageCards/ServerTagsAndRegionCard"
 
 
 interface Params {
@@ -65,9 +66,7 @@ export default async function Server({
                     <ServerRatingCard number={1} tag={server.tags[0]}/>
                     // todo integrate real rating
                 }
-                <div className="flex w-full h-40 rounded-2xl bg-island">
-                    todo: tags and region
-                </div>
+                <ServerTagsAndRegionCard tags={server.tags} region={server.region} />
             </div>
         </div>
 
