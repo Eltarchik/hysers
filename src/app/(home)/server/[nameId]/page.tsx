@@ -4,6 +4,7 @@ import { notFound } from "next/navigation"
 import { LikeServerChip } from "@/entities/server/ui/LikeServerChip"
 import { Text } from "@/shared/ui/Text"
 import Image from "next/image"
+import { ServerInfoCard } from "@/entities/server/ui/serverPageCards/ServerInfoCard"
 
 
 interface Params {
@@ -51,9 +52,12 @@ export default async function Server({
                 </Text>
             </div>
             <div className="flex flex-col gap-5">
-                <div className="flex w-full h-40 rounded-2xl bg-island">
-                    todo: online, domen, ip
-                </div>
+                <ServerInfoCard id={server.id}
+                                nameId={server.name}
+                                domain={server.domain}
+                                ip={server.ip}
+                                players={server.players}
+                />
                 <div className="flex w-full h-40 rounded-2xl bg-island">
                     todo: top
                 </div>

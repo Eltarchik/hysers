@@ -4,6 +4,11 @@ export const getServerKey = (nameId: string) => {
     return ["server", nameId]
 }
 
+export const getServerStatusKey = (nameId: string) => {
+    const serverKey = getServerKey(nameId)
+    return [...serverKey, "status"]
+}
+
 export const getServersKey = (filters: Record<Filters, string[]>, page: number) => {
     return ["servers", filters.regions, filters.tags, page]
 }

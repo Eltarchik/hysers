@@ -6,10 +6,11 @@ import { ChildrenProp, ClassProp } from "@/shared/ui/propsPresets"
 
 type Props = {
     colors?: "basic" | "accent" | "gold"
+    textClassName?: string
 } & ClassProp & ChildrenProp
 
 export const SmallChip = (
-    { colors = "basic", className, children }: Props
+    { colors = "basic", className, textClassName, children }: Props
 ) => {
     let bgColor = "bg-glade"
     if (colors === "accent") bgColor = "bg-accent-island"
@@ -20,6 +21,6 @@ export const SmallChip = (
     else if (colors === "gold") textColor = "text-gold-element"
 
     return <span className={cn("flex items-center px-3 h-6 rounded-full", bgColor, className)}>
-        <Text small className={cn("text-nowrap", textColor)}>{ children }</Text>
+        <Text small className={cn("text-nowrap", textColor, textClassName)}>{ children }</Text>
     </span>
 }
