@@ -6,6 +6,7 @@ import { Text } from "@/shared/ui/Text"
 import Image from "next/image"
 import { ServerInfoCard } from "@/entities/server/ui/serverPageCards/ServerInfoCard"
 import { ServerRatingCard } from "@/entities/server/ui/serverPageCards/ServerRatingCard"
+import { Metadata } from "next"
 
 
 interface Params {
@@ -74,3 +75,32 @@ export default async function Server({
         notFound()
     }
 }
+
+export async function generateMetadata({ params }: Params): Promise<Metadata> {
+    const { nameId } = await params
+
+    const notFound: Metadata = {
+        title: "Server not found"
+    }
+
+    try {
+        const resp = await serverAPI.server(nameId)
+        const server = resp.status === "success" ? resp.data : undefined
+
+        if (!server) return notFound
+
+        return {
+            title: `${server.name}`,
+            description: `${server.description}`,
+            openGraph: {
+                title: server.name,
+                description: `${server.players} players`,
+                type: "website",
+            },
+        }
+
+    } catch (e) {
+        return notFound
+    }
+}
+
