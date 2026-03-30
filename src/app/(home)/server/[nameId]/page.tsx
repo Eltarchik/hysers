@@ -5,6 +5,7 @@ import { LikeServerChip } from "@/entities/server/ui/LikeServerChip"
 import { Text } from "@/shared/ui/Text"
 import Image from "next/image"
 import { ServerInfoCard } from "@/entities/server/ui/serverPageCards/ServerInfoCard"
+import { ServerRatingCard } from "@/entities/server/ui/serverPageCards/ServerRatingCard"
 
 
 interface Params {
@@ -58,9 +59,11 @@ export default async function Server({
                                 ip={server.ip}
                                 players={server.players}
                 />
-                <div className="flex w-full h-40 rounded-2xl bg-island">
-                    todo: top
-                </div>
+                <ServerRatingCard number={666} />
+                { server.tags.length &&
+                    <ServerRatingCard number={1} tag={server.tags[0]}/>
+                    // todo integrate real rating
+                }
                 <div className="flex w-full h-40 rounded-2xl bg-island">
                     todo: tags and region
                 </div>
