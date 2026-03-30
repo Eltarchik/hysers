@@ -8,6 +8,8 @@ import { ServerInfoCard } from "@/entities/server/ui/serverPageCards/ServerInfoC
 import { ServerRatingCard } from "@/entities/server/ui/serverPageCards/ServerRatingCard"
 import { Metadata } from "next"
 import { ServerTagsAndRegionCard } from "@/entities/server/ui/serverPageCards/ServerTagsAndRegionCard"
+import { ServerOwnerCard } from "@/entities/server/ui/serverPageCards/ServerOwnerCard"
+import { User } from "@/entities/user/types"
 
 
 interface Params {
@@ -15,6 +17,11 @@ interface Params {
 }
 
 export const revalidate = 3600
+
+const mockUser: User = {
+    name: "Eltar",
+    email: "eltar-ion@yandex.ru"
+} // todo remove
 
 export default async function Server({
     params,
@@ -28,9 +35,7 @@ export default async function Server({
 
         return <div className="grid grid-cols-1 xl:grid-cols-[4fr_9fr_4fr] gap-10 max-w-440 w-full">
             <div className="flex flex-col gap-5">
-                <div className="flex w-full h-40 rounded-2xl bg-island">
-                    todo: user
-                </div>
+                <ServerOwnerCard user={mockUser} ownerNotConfirmed={true} />
                 <div className="flex w-full h-40 rounded-2xl bg-island">
                     todo: contacts
                 </div>
@@ -66,7 +71,7 @@ export default async function Server({
                     <ServerRatingCard number={1} tag={server.tags[0]}/>
                     // todo integrate real rating
                 }
-                <ServerTagsAndRegionCard tags={server.tags} region={server.region} />
+                <ServerTagsAndRegionCard tags={server.tags} region={server.region ?? undefined} />
             </div>
         </div>
 
